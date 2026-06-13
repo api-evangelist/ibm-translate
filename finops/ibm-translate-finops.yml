@@ -1,0 +1,82 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: IBM Language Translator
+providerId: ibm-translate
+created: '2026-06-13'
+modified: '2026-06-13'
+reconciled: true
+tags:
+  - Translation
+  - IBM Watson
+  - FinOps
+  - FOCUS
+  - Deprecated
+description: >-
+  FOCUS-aligned FinOps profile for IBM Watson Language Translator. The service used a
+  character-based consumption billing model under Standard plan, with a 1M character/month
+  free Lite tier. The service was deprecated June 2023 and withdrawn December 2024, so
+  FinOps guidance is primarily relevant for historical cost analysis and migration planning.
+notes: >-
+  Customers migrating from IBM Language Translator should map character-based spend to
+  equivalent character or token costs in replacement services such as IBM watsonx or
+  third-party NMT providers.
+sources:
+  - https://cloud.ibm.com/catalog/services/language-translator
+  - https://www.ibm.com/cloud/watson-language-translator/pricing
+  - https://focus.finops.org/focus-specification/v1-3/
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+publisherName: IBM
+serviceCategory: AI and Machine Learning
+billingModel:
+  pricingCategory: Usage Based
+  billingFrequency: Monthly
+  billingCurrency: USD
+  chargeCategories:
+    - Usage
+    - Adjustment
+focusColumns:
+  ServiceName: Watson Language Translator
+  ServiceCategory: AI and Machine Learning
+  ProviderName: IBM
+  PublisherName: IBM
+  InvoiceIssuerName: IBM
+  BillingCurrency: USD
+  ChargeCategory: Usage
+meters:
+  - name: translated_characters
+    description: Number of characters translated via the API per month.
+    unit: characters
+    aggregation: sum
+    dimensions: [plan, instance, region]
+  - name: custom_model_maintenance
+    description: Number of custom translation models hosted per month.
+    unit: models
+    aggregation: count
+    dimensions: [instance, region]
+principles:
+  - name: Visibility
+    description: >-
+      Monitor character consumption via IBM Cloud usage dashboard. Set usage alerts
+      to detect unexpected spikes in translation volume.
+  - name: Allocation
+    description: >-
+      Use separate service instances per application or team to attribute translation
+      costs accurately. Tag instances with cost-center metadata.
+  - name: Optimization
+    description: >-
+      Cache translated strings for repeated content. Batch short texts into single
+      API requests up to the 50,000 character limit. Delete unused custom models to
+      eliminate the $15/month maintenance fee per model.
+  - name: Accountability
+    description: >-
+      Given the service deprecation in December 2024, perform historical cost
+      reconciliation and map ongoing translation spend to the replacement service.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

@@ -1,0 +1,76 @@
+aid: ibm-translate
+url: https://raw.githubusercontent.com/api-evangelist/ibm-translate/refs/heads/main/apis.yml
+name: IBM Language Translator
+kind: company
+description: >-
+  IBM Watson Language Translator was a REST API service for translating text between 35+
+  languages, detecting input language automatically, and creating custom domain-specific
+  translation models using TMX, XLIFF, or CSV training data. The service supported neural
+  machine translation (NMT) and was available through IBM Cloud. IBM deprecated the service
+  in June 2023 and fully withdrew it in December 2024.
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+tags:
+  - Translation
+  - Natural Language Processing
+  - Machine Translation
+  - IBM Watson
+  - AI
+  - Text Analysis
+  - Deprecated
+created: '2026-06-13'
+modified: '2026-06-13'
+specificationVersion: '0.19'
+apis:
+  - aid: ibm-translate:language-translator-v3
+    name: Language Translator V3
+    description: >-
+      REST API for translating text between 35+ languages, identifying the language of input
+      text, listing available translation models, and creating or managing custom translation
+      models. The base URL is https://{region}.ml.cloud.ibm.com with IAM authentication via
+      Bearer tokens. API version parameter 2018-05-01 is required on all requests. The service
+      was deprecated June 2023 and withdrawn December 2024.
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://cloud.ibm.com/apidocs/language-translator
+    baseURL: https://api.us-south.language-translator.watson.cloud.ibm.com
+    tags:
+      - Translation
+      - Language Detection
+      - Neural Machine Translation
+      - Custom Models
+      - IBM Watson
+      - Deprecated
+    properties:
+      - type: Documentation
+        url: https://cloud.ibm.com/apidocs/language-translator
+      - type: GitHubRepository
+        url: https://github.com/watson-developer-cloud/python-sdk
+      - type: GitHubRepository
+        url: https://github.com/watson-developer-cloud/node-sdk
+      - type: Pricing
+        url: https://www.ibm.com/cloud/watson-language-translator/pricing
+common:
+  - type: Website
+    url: https://www.ibm.com/cloud/watson-language-translator
+  - type: Documentation
+    url: https://cloud.ibm.com/apidocs/language-translator
+  - type: GitHubOrg
+    url: https://github.com/watson-developer-cloud
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/ibm
+  - type: Blog
+    url: https://www.ibm.com/blog/category/watson/
+  - type: Pricing
+    url: https://www.ibm.com/cloud/watson-language-translator/pricing
+  - type: StatusPage
+    url: https://cloud.ibm.com/status?component=language-translator&selected=status
+  - type: X
+    url: https://x.com/IBMcloud
+  - type: Plans
+    url: plans/ibm-translate-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/ibm-translate-rate-limits.yml
+  - type: FinOps
+    url: finops/ibm-translate-finops.yml
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

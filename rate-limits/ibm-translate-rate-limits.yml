@@ -1,0 +1,56 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: IBM Language Translator
+providerId: ibm-translate
+created: '2026-06-13'
+modified: '2026-06-13'
+reconciled: false
+tags:
+  - Translation
+  - IBM Watson
+  - Rate Limiting
+  - Deprecated
+description: >-
+  IBM Watson Language Translator enforced per-instance rate limits. The Lite plan was limited
+  to lower throughput compared to the Standard plan. IBM Cloud enforced HTTP 429 responses
+  when limits were exceeded. The service was deprecated June 2023 and withdrawn December 2024.
+notes: >-
+  IBM did not publish exhaustive numeric rate-limit tables in public documentation. Limits
+  were enforced per service instance and varied by plan. Standard plan customers could contact
+  IBM to discuss higher limits for production workloads.
+sources:
+  - https://cloud.ibm.com/apidocs/language-translator
+  - https://www.ibm.com/docs/en/watson
+responseCodes:
+  throttled: 429
+limits:
+  - name: Lite Plan Concurrency
+    scope: instance
+    metric: requests-per-minute
+    limit: 10
+    notes: Approximate; Lite plan had significantly lower request rate allowances.
+  - name: Standard Plan Concurrency
+    scope: instance
+    metric: requests-per-minute
+    limit: 50
+    notes: >-
+      Approximate; Standard plan customers with high-volume needs could contact IBM for
+      enterprise limits.
+  - name: Character Limit Per Request
+    scope: request
+    metric: characters
+    limit: 50000
+    notes: Single translate request capped at 50,000 characters.
+policies:
+  - name: Backoff Strategy
+    description: >-
+      Use exponential backoff with jitter when receiving HTTP 429 responses. Honor any
+      Retry-After header returned by the IBM Cloud API gateway.
+  - name: Authentication
+    description: >-
+      All requests required IBM IAM authentication via a Bearer token obtained from
+      https://iam.cloud.ibm.com/identity/token using an API key.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

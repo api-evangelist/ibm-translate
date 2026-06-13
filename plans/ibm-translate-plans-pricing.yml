@@ -1,0 +1,103 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: IBM Language Translator
+providerId: ibm-translate
+created: '2026-06-13'
+modified: '2026-06-13'
+reconciled: true
+tags:
+  - Translation
+  - IBM Watson
+  - Plans
+  - Deprecated
+description: >-
+  IBM Watson Language Translator offered a Lite free tier and a Standard pay-as-you-go tier
+  billed per character. Custom model training and hosting incurred additional monthly fees.
+  The service was deprecated in June 2023 and withdrawn in December 2024; no new instances
+  could be provisioned after June 2023.
+notes: >-
+  Pricing is historical; the service is no longer available. Custom model translations were
+  billed at $100 per million characters plus a $15 per-model per-month maintenance fee.
+sources:
+  - https://cloud.ibm.com/catalog/services/language-translator
+  - https://www.ibm.com/cloud/watson-language-translator/pricing
+plans:
+  - id: ibm-translate-lite
+    name: Lite
+    type: free
+    description: >-
+      Free tier providing 1 million characters per month at no cost. Custom models were not
+      available on the Lite plan. Lite instances were deleted after 30 days of inactivity.
+    entries:
+      - label: Characters Per Month
+        name: characters_per_month
+        type: free
+        metric: characters
+        limit: 1000000
+        timeFrame: monthly
+        geo: global
+        unit: 1
+        price: '0.00'
+        userMultiplied: false
+    elements:
+      - name: Text Translation
+      - name: Language Detection
+      - name: List Models
+  - id: ibm-translate-standard
+    name: Standard
+    type: usage
+    description: >-
+      Pay-as-you-go plan charged per character translated. First 250,000 characters per month
+      included free; $0.02 per thousand characters thereafter. Custom model usage billed at
+      $100 per million characters plus $15 per model per month maintenance fee.
+    entries:
+      - label: Characters (included)
+        name: characters_included
+        type: free
+        metric: characters
+        limit: 250000
+        timeFrame: monthly
+        geo: global
+        unit: 1
+        price: '0.00'
+        userMultiplied: false
+      - label: Characters (overage)
+        name: characters_overage
+        type: usage
+        metric: characters
+        limit: -1
+        timeFrame: usage
+        geo: global
+        unit: 1000
+        price: '0.02 USD per thousand characters'
+        userMultiplied: false
+      - label: Custom Model Translation
+        name: custom_model_characters
+        type: usage
+        metric: characters
+        limit: -1
+        timeFrame: usage
+        geo: global
+        unit: 1000000
+        price: '100.00 USD per million characters'
+        userMultiplied: false
+      - label: Custom Model Maintenance
+        name: custom_model_maintenance
+        type: usage
+        metric: models
+        limit: -1
+        timeFrame: monthly
+        geo: global
+        unit: 1
+        price: '15.00 USD per model per month'
+        userMultiplied: false
+    elements:
+      - name: Text Translation
+      - name: Language Detection
+      - name: Document Translation
+      - name: Custom Model Training
+      - name: Custom Model Hosting
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
