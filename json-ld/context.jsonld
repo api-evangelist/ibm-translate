@@ -1,0 +1,159 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "ibmlt": "https://cloud.ibm.com/apidocs/language-translator#",
+    "owl": "http://www.w3.org/2002/07/owl#",
+
+    "TranslationModel": "ibmlt:TranslationModel",
+    "TranslateRequest": "ibmlt:TranslateRequest",
+    "TranslationResult": "ibmlt:TranslationResult",
+    "Translation": "ibmlt:Translation",
+    "Language": "ibmlt:Language",
+    "IdentifiableLanguage": "ibmlt:IdentifiableLanguage",
+    "IdentifiedLanguage": "ibmlt:IdentifiedLanguage",
+    "DocumentStatus": "ibmlt:DocumentStatus",
+
+    "model_id": {
+      "@id": "ibmlt:model_id",
+      "@type": "xsd:string"
+    },
+    "name": {
+      "@id": "schema:name",
+      "@type": "xsd:string"
+    },
+    "description": {
+      "@id": "schema:description",
+      "@type": "xsd:string"
+    },
+    "source": {
+      "@id": "ibmlt:sourceLanguage",
+      "@type": "xsd:string"
+    },
+    "target": {
+      "@id": "ibmlt:targetLanguage",
+      "@type": "xsd:string"
+    },
+    "base_model_id": {
+      "@id": "ibmlt:baseModelId",
+      "@type": "xsd:string"
+    },
+    "domain": {
+      "@id": "ibmlt:domain",
+      "@type": "xsd:string"
+    },
+    "customizable": {
+      "@id": "ibmlt:customizable",
+      "@type": "xsd:boolean"
+    },
+    "default_model": {
+      "@id": "ibmlt:defaultModel",
+      "@type": "xsd:boolean"
+    },
+    "owner": {
+      "@id": "ibmlt:owner",
+      "@type": "xsd:string"
+    },
+    "status": {
+      "@id": "ibmlt:status",
+      "@type": "xsd:string"
+    },
+    "text": {
+      "@id": "ibmlt:inputText",
+      "@container": "@list"
+    },
+    "translation": {
+      "@id": "ibmlt:translatedText",
+      "@type": "xsd:string"
+    },
+    "translations": {
+      "@id": "ibmlt:translations",
+      "@container": "@list"
+    },
+    "word_count": {
+      "@id": "ibmlt:wordCount",
+      "@type": "xsd:integer"
+    },
+    "character_count": {
+      "@id": "ibmlt:characterCount",
+      "@type": "xsd:integer"
+    },
+    "detected_language": {
+      "@id": "ibmlt:detectedLanguage",
+      "@type": "xsd:string"
+    },
+    "detected_language_confidence": {
+      "@id": "ibmlt:detectedLanguageConfidence",
+      "@type": "xsd:double"
+    },
+    "confidence": {
+      "@id": "ibmlt:confidence",
+      "@type": "xsd:double"
+    },
+    "language": {
+      "@id": "ibmlt:languageCode",
+      "@type": "xsd:string"
+    },
+    "language_name": {
+      "@id": "ibmlt:languageName",
+      "@type": "xsd:string"
+    },
+    "native_language_name": {
+      "@id": "ibmlt:nativeLanguageName",
+      "@type": "xsd:string"
+    },
+    "country_code": {
+      "@id": "ibmlt:countryCode",
+      "@type": "xsd:string"
+    },
+    "words_separated": {
+      "@id": "ibmlt:wordsSeparated",
+      "@type": "xsd:boolean"
+    },
+    "direction": {
+      "@id": "ibmlt:textDirection",
+      "@type": "xsd:string"
+    },
+    "supported_as_source": {
+      "@id": "ibmlt:supportedAsSource",
+      "@type": "xsd:boolean"
+    },
+    "supported_as_target": {
+      "@id": "ibmlt:supportedAsTarget",
+      "@type": "xsd:boolean"
+    },
+    "identifiable": {
+      "@id": "ibmlt:identifiable",
+      "@type": "xsd:boolean"
+    },
+    "document_id": {
+      "@id": "ibmlt:documentId",
+      "@type": "xsd:string"
+    },
+    "filename": {
+      "@id": "ibmlt:filename",
+      "@type": "xsd:string"
+    },
+    "created": {
+      "@id": "schema:dateCreated",
+      "@type": "xsd:dateTime"
+    },
+    "completed": {
+      "@id": "ibmlt:completedAt",
+      "@type": "xsd:dateTime"
+    },
+    "models": {
+      "@id": "ibmlt:models",
+      "@container": "@list"
+    },
+    "languages": {
+      "@id": "ibmlt:languages",
+      "@container": "@list"
+    },
+    "documents": {
+      "@id": "ibmlt:documents",
+      "@container": "@list"
+    }
+  }
+}

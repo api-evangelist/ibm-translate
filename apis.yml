@@ -48,6 +48,8 @@ apis:
         url: https://github.com/watson-developer-cloud/node-sdk
       - type: Pricing
         url: https://www.ibm.com/cloud/watson-language-translator/pricing
+      - type: OpenAPI
+        url: openapi/openapi.yaml
 common:
   - type: Website
     url: https://www.ibm.com/cloud/watson-language-translator

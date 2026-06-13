@@ -1,0 +1,61 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/ibm-translate/main/json-schema/translation-model.json",
+  "title": "TranslationModel",
+  "description": "Information about a translation model in IBM Watson Language Translator V3.",
+  "type": "object",
+  "properties": {
+    "model_id": {
+      "type": "string",
+      "description": "A globally unique string that identifies the underlying model used for translation.",
+      "example": "en-es"
+    },
+    "name": {
+      "type": "string",
+      "description": "Optional name specified when the model was created.",
+      "example": "My custom model"
+    },
+    "source": {
+      "type": "string",
+      "description": "Translation source language code.",
+      "example": "en"
+    },
+    "target": {
+      "type": "string",
+      "description": "Translation target language code.",
+      "example": "es"
+    },
+    "base_model_id": {
+      "type": "string",
+      "description": "Model ID of the base model used to customize this model. Empty string if not a custom model.",
+      "example": "en-es"
+    },
+    "domain": {
+      "type": "string",
+      "description": "The domain of the translation model.",
+      "example": "general"
+    },
+    "customizable": {
+      "type": "boolean",
+      "description": "Whether this model can be used as a base for customization.",
+      "example": true
+    },
+    "default_model": {
+      "type": "boolean",
+      "description": "Whether this model is a default model for a given language pair.",
+      "example": true
+    },
+    "owner": {
+      "type": "string",
+      "description": "The IBM Cloud ID of the instance that created the model. Empty string for IBM-provided models.",
+      "example": ""
+    },
+    "status": {
+      "type": "string",
+      "description": "Availability status of the model.",
+      "enum": ["available", "training", "error"],
+      "example": "available"
+    }
+  },
+  "required": ["model_id", "source", "target", "base_model_id", "domain", "customizable", "default_model", "owner", "status"]
+}

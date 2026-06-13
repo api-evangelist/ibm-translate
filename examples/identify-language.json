@@ -1,0 +1,33 @@
+{
+  "summary": "Identify the language of input text",
+  "description": "Example of identifying the language of an unknown text string using IBM Watson Language Translator V3",
+  "request": {
+    "method": "POST",
+    "url": "https://api.us-south.language-translator.watson.cloud.ibm.com/v3/identify?version=2018-05-01",
+    "headers": {
+      "Content-Type": "text/plain",
+      "Accept": "application/json",
+      "Authorization": "Bearer <IAM_TOKEN>"
+    },
+    "body": "Cómo estás"
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "languages": [
+        {
+          "language": "es",
+          "confidence": 0.9978
+        },
+        {
+          "language": "ca",
+          "confidence": 0.0015
+        },
+        {
+          "language": "pt",
+          "confidence": 0.0004
+        }
+      ]
+    }
+  }
+}

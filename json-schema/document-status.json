@@ -1,0 +1,77 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/ibm-translate/main/json-schema/document-status.json",
+  "title": "DocumentStatus",
+  "description": "Status information about a document submitted for translation in IBM Watson Language Translator V3.",
+  "type": "object",
+  "properties": {
+    "document_id": {
+      "type": "string",
+      "description": "System generated ID identifying a document being translated using one specific translation model.",
+      "example": "abc123-doc-id"
+    },
+    "filename": {
+      "type": "string",
+      "description": "The filename from the request or extracted from the file.",
+      "example": "report.docx"
+    },
+    "status": {
+      "type": "string",
+      "description": "The status of the translation job associated with the submitted document.",
+      "enum": ["processing", "available", "failed", "deleted"],
+      "example": "available"
+    },
+    "model_id": {
+      "type": "string",
+      "description": "A globally unique string that identifies the model used for translation.",
+      "example": "en-es"
+    },
+    "base_model_id": {
+      "type": "string",
+      "description": "Model ID of the base model used for customization. Empty string if not a custom model.",
+      "example": "en-es"
+    },
+    "source": {
+      "type": "string",
+      "description": "Translation source language code.",
+      "example": "en"
+    },
+    "detected_language_confidence": {
+      "type": "number",
+      "description": "Confidence score for source language detection. Present only when automatic language identification was used.",
+      "minimum": 0,
+      "maximum": 1,
+      "example": 0.998
+    },
+    "target": {
+      "type": "string",
+      "description": "Translation target language code.",
+      "example": "es"
+    },
+    "created": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The time when the document was submitted.",
+      "example": "2023-01-15T10:30:00Z"
+    },
+    "completed": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The time when the translation completed (status became available or failed).",
+      "example": "2023-01-15T10:30:45Z"
+    },
+    "word_count": {
+      "type": "integer",
+      "description": "The number of words in the source document.",
+      "minimum": 0,
+      "example": 523
+    },
+    "character_count": {
+      "type": "integer",
+      "description": "The number of characters in the source document.",
+      "minimum": 0,
+      "example": 3142
+    }
+  },
+  "required": ["document_id", "filename", "status", "model_id", "source", "target", "created"]
+}

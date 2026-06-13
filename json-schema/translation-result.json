@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/ibm-translate/main/json-schema/translation-result.json",
+  "title": "TranslationResult",
+  "description": "The result returned from a call to translate a list of strings using IBM Watson Language Translator V3.",
+  "type": "object",
+  "properties": {
+    "word_count": {
+      "type": "integer",
+      "description": "Number of words in the input text.",
+      "minimum": 0,
+      "example": 2
+    },
+    "character_count": {
+      "type": "integer",
+      "description": "Number of characters in the input text.",
+      "minimum": 0,
+      "example": 13
+    },
+    "detected_language": {
+      "type": "string",
+      "description": "The language code of the source text if the source language was automatically detected. Omitted if source language was explicitly provided.",
+      "example": "en"
+    },
+    "detected_language_confidence": {
+      "type": "number",
+      "description": "A score between 0 and 1 indicating the confidence of source language detection. Present only when the service detects the source language automatically.",
+      "minimum": 0,
+      "maximum": 1,
+      "example": 0.998
+    },
+    "translations": {
+      "type": "array",
+      "description": "List of translation outputs in UTF-8 encoding, corresponding to the input text entries.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "translation": {
+            "type": "string",
+            "description": "Translation output in UTF-8 encoding.",
+            "example": "Hola, mundo!"
+          }
+        },
+        "required": ["translation"]
+      }
+    }
+  },
+  "required": ["word_count", "character_count", "translations"]
+}

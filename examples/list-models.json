@@ -1,0 +1,54 @@
+{
+  "summary": "List available translation models",
+  "description": "Example of listing available translation models filtered by source language",
+  "request": {
+    "method": "GET",
+    "url": "https://api.us-south.language-translator.watson.cloud.ibm.com/v3/models?version=2018-05-01&source=en",
+    "headers": {
+      "Authorization": "Bearer <IAM_TOKEN>"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "models": [
+        {
+          "model_id": "en-es",
+          "name": "",
+          "source": "en",
+          "target": "es",
+          "base_model_id": "",
+          "domain": "general",
+          "customizable": true,
+          "default_model": true,
+          "owner": "",
+          "status": "available"
+        },
+        {
+          "model_id": "en-fr",
+          "name": "",
+          "source": "en",
+          "target": "fr",
+          "base_model_id": "",
+          "domain": "general",
+          "customizable": true,
+          "default_model": true,
+          "owner": "",
+          "status": "available"
+        },
+        {
+          "model_id": "en-de",
+          "name": "",
+          "source": "en",
+          "target": "de",
+          "base_model_id": "",
+          "domain": "general",
+          "customizable": true,
+          "default_model": true,
+          "owner": "",
+          "status": "available"
+        }
+      ]
+    }
+  }
+}

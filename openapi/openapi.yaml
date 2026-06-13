@@ -1,0 +1,1015 @@
+openapi: 3.0.3
+info:
+  title: IBM Watson Language Translator V3
+  description: >-
+    REST API for translating text between 35+ languages, identifying the language of input
+    text, listing available translation models, and creating or managing custom translation
+    models. The base URL varies by region. IAM authentication via Bearer tokens is required.
+    The API version parameter 2018-05-01 is required on all requests. NOTE: This service was
+    deprecated in June 2023 and withdrawn in December 2024.
+  version: 3.0.0
+  contact:
+    name: IBM Watson
+    url: https://cloud.ibm.com/apidocs/language-translator
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  x-deprecated: true
+  x-deprecation-date: '2023-06-01'
+  x-withdrawal-date: '2024-12-01'
+externalDocs:
+  description: IBM Cloud API Docs - Language Translator
+  url: https://cloud.ibm.com/apidocs/language-translator
+servers:
+  - url: 'https://api.us-south.language-translator.watson.cloud.ibm.com'
+    description: US South
+  - url: 'https://api.us-east.language-translator.watson.cloud.ibm.com'
+    description: US East
+  - url: 'https://api.eu-de.language-translator.watson.cloud.ibm.com'
+    description: Frankfurt (EU)
+  - url: 'https://api.eu-gb.language-translator.watson.cloud.ibm.com'
+    description: London (EU)
+  - url: 'https://api.au-syd.language-translator.watson.cloud.ibm.com'
+    description: Sydney
+  - url: 'https://api.jp-tok.language-translator.watson.cloud.ibm.com'
+    description: Tokyo
+  - url: 'https://api.kr-seo.language-translator.watson.cloud.ibm.com'
+    description: Seoul
+security:
+  - BearerAuth: []
+tags:
+  - name: Languages
+    description: Operations for listing supported and identifiable languages
+  - name: Translation
+    description: Operations for translating text
+  - name: Models
+    description: Operations for managing translation models
+  - name: Documents
+    description: Operations for translating documents
+paths:
+  /v3/languages:
+    get:
+      summary: List supported languages
+      description: >-
+        Returns a list of supported languages for translation. The method returns an array
+        of supported languages with information about each language. Languages are listed in
+        alphabetical order by language code (for example, af, ar, az).
+      operationId: listLanguages
+      tags:
+        - Languages
+      parameters:
+        - $ref: '#/components/parameters/Version'
+      responses:
+        '200':
+          description: Successful response with list of supported languages
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Languages'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /v3/translate:
+    post:
+      summary: Translate
+      description: >-
+        Translates the input text from the source language to the target language. Specify a
+        model ID that indicates the source and target languages, or specify the source and
+        target languages individually. You can omit the source language to have the service
+        detect it for you. To use a default model, specify only the target language. IBM
+        Watson Language Translator may reject requests if the combined inputs exceed 50 KB.
+      operationId: translate
+      tags:
+        - Translation
+      parameters:
+        - $ref: '#/components/parameters/Version'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TranslateRequest'
+      responses:
+        '200':
+          description: Successful translation response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TranslationResult'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /v3/identifiable_languages:
+    get:
+      summary: List identifiable languages
+      description: >-
+        Lists the languages that the service can identify. Returns the language code
+        (for example, en for English or es for Spanish) and name of each language.
+      operationId: listIdentifiableLanguages
+      tags:
+        - Languages
+      parameters:
+        - $ref: '#/components/parameters/Version'
+      responses:
+        '200':
+          description: Successful response with list of identifiable languages
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IdentifiableLanguages'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /v3/identify:
+    post:
+      summary: Identify language
+      description: >-
+        Identifies the language of the input text. Returns a list of suggested languages
+        with confidence levels. The service defaults to returning the top five detected
+        languages, but the number of languages may be lower if the text provides little
+        evidence for particular languages.
+      operationId: identify
+      tags:
+        - Translation
+      parameters:
+        - $ref: '#/components/parameters/Version'
+      requestBody:
+        required: true
+        content:
+          text/plain:
+            schema:
+              type: string
+              description: Input text in UTF-8 format.
+              example: 'Hello, world!'
+      responses:
+        '200':
+          description: Successful language identification response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IdentifiedLanguages'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /v3/models:
+    get:
+      summary: List models
+      description: >-
+        Lists available translation models. You can filter models by source or target language
+        code and by whether the models are the default. Use the model_id property of an item
+        in the response list to get the string value to pass to the model_id parameter of
+        the translate method.
+      operationId: listModels
+      tags:
+        - Models
+      parameters:
+        - $ref: '#/components/parameters/Version'
+        - name: source
+          in: query
+          description: >-
+            Specify a language code to filter results by source language. For example, returns
+            models that translate from English (en).
+          schema:
+            type: string
+            example: en
+        - name: target
+          in: query
+          description: >-
+            Specify a language code to filter results by target language. For example, returns
+            models that translate to Spanish (es).
+          schema:
+            type: string
+            example: es
+        - name: default
+          in: query
+          description: >-
+            If the default parameter isn't specified, the service will return all models
+            (default and non-default). When set to true, the response includes only default
+            models. When set to false, the response includes only custom models.
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: Successful response with list of translation models
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TranslationModels'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+    post:
+      summary: Create model
+      description: >-
+        Uploads training files to customize a translation model. You can customize a model
+        with a forced glossary, a parallel corpus, or both. The service limits the number of
+        custom models that you can create per language pair to a maximum of 10.
+      operationId: createModel
+      tags:
+        - Models
+      parameters:
+        - $ref: '#/components/parameters/Version'
+        - name: base_model_id
+          in: query
+          required: true
+          description: >-
+            The ID of the translation model to use as the base for customization. To see
+            available models and IDs, use the List models method. Most models that are provided
+            with the service are customizable. In addition, all models that you create with
+            parallel corpora customization can be further customized with a forced glossary.
+          schema:
+            type: string
+            example: en-es
+        - name: name
+          in: query
+          description: >-
+            An optional model name that you can use to identify the model. Valid characters are
+            letters, numbers, dashes, underscores, spaces and apostrophes. The maximum length
+            of the name is 32 characters.
+          schema:
+            type: string
+            maxLength: 32
+            example: my-custom-model
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                forced_glossary:
+                  type: string
+                  format: binary
+                  description: >-
+                    A file with forced glossary terms for the source and target languages. The
+                    customizations in the file completely override the domain translaton data,
+                    including high frequency or high confidence phrase translations. Use a
+                    glossary file if you want your translation preferences to be applied
+                    consistently for a language pair. You can upload only one glossary file
+                    per model. The format of the file can be TMX or CSV.
+                parallel_corpus:
+                  type: string
+                  format: binary
+                  description: >-
+                    A file with parallel sentences for the source and target languages. The
+                    target language translations of source language phrases in the dictionary
+                    are given equal weight as phrases that the service discovers automatically
+                    from bilingual corpora. Use parallel corpora when you want your translation
+                    preferences to be applied in context and when you want your model to learn
+                    from additional bilingual text. You can upload only one parallel corpus file
+                    per model. The format of the file must be TMX.
+      responses:
+        '200':
+          description: Custom model successfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TranslationModel'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /v3/models/{model_id}:
+    get:
+      summary: Get model details
+      description: >-
+        Gets information about a translation model, including training status for custom
+        models. Use this method to poll the status of your customization request. You can
+        also use it to confirm that the default models are available.
+      operationId: getModel
+      tags:
+        - Models
+      parameters:
+        - $ref: '#/components/parameters/Version'
+        - name: model_id
+          in: path
+          required: true
+          description: Model ID of the model to get.
+          schema:
+            type: string
+            example: en-es
+      responses:
+        '200':
+          description: Successful response with model details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TranslationModel'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+    delete:
+      summary: Delete model
+      description: >-
+        Deletes a custom translation model. You can delete only custom models, not the models
+        provided as defaults. If the operation is successful, the status code of the response
+        is HTTP 200.
+      operationId: deleteModel
+      tags:
+        - Models
+      parameters:
+        - $ref: '#/components/parameters/Version'
+        - name: model_id
+          in: path
+          required: true
+          description: Model ID of the model to delete.
+          schema:
+            type: string
+            example: my-custom-model-id
+      responses:
+        '200':
+          description: Model deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteModelResult'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /v3/documents:
+    get:
+      summary: List documents
+      description: >-
+        Lists documents that have been submitted for translation. Returns a list of documents
+        with supporting meta data.
+      operationId: listDocuments
+      tags:
+        - Documents
+      parameters:
+        - $ref: '#/components/parameters/Version'
+      responses:
+        '200':
+          description: Successful response with list of submitted documents
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+    post:
+      summary: Translate document
+      description: >-
+        Submit a document for translation. You can submit the document contents in the
+        file parameter, and optionally the name of the document in the filename parameter.
+        Specify the translation model to use for translation of the document contents by
+        either providing a model ID using the model_id parameter or the source and target
+        language code using the source and target parameters. IBM Watson Language Translator
+        may reject documents submission requests if the file size limit is exceeded. The
+        current size limit for document translation is 20 MB.
+      operationId: translateDocument
+      tags:
+        - Documents
+      parameters:
+        - $ref: '#/components/parameters/Version'
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - file
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: The contents of the source file to translate.
+                filename:
+                  type: string
+                  description: >-
+                    The name of the input file in UTF-8 format, including the file extension.
+                    Used when providing a filename is needed.
+                file_content_type:
+                  type: string
+                  description: The content type of the file.
+                model_id:
+                  type: string
+                  description: >-
+                    The model to use for translation. model_id or both source and target is
+                    required.
+                source:
+                  type: string
+                  description: >-
+                    Language code that specifies the language of the source document.
+                target:
+                  type: string
+                  description: >-
+                    Language code that specifies the language for translation output.
+                document_id:
+                  type: string
+                  description: >-
+                    To use a previously submitted document as the source for a new translation,
+                    enter the document_id of the document.
+      responses:
+        '202':
+          description: Document accepted for translation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentStatus'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '413':
+          $ref: '#/components/responses/PayloadTooLarge'
+        '415':
+          $ref: '#/components/responses/UnsupportedMediaType'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /v3/documents/{document_id}:
+    get:
+      summary: Get document status
+      description: >-
+        Gets the translation status of a document. Returns the current status of a document
+        translation. This method has to be invoked multiple times to determine when the
+        translation has completed.
+      operationId: getDocumentStatus
+      tags:
+        - Documents
+      parameters:
+        - $ref: '#/components/parameters/Version'
+        - name: document_id
+          in: path
+          required: true
+          description: The document ID of the document to retrieve status of.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response with document translation status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentStatus'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+    delete:
+      summary: Delete document
+      description: Deletes a document.
+      operationId: deleteDocument
+      tags:
+        - Documents
+      parameters:
+        - $ref: '#/components/parameters/Version'
+        - name: document_id
+          in: path
+          required: true
+          description: Document ID of the document to delete.
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Document deleted successfully (no content returned)
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /v3/documents/{document_id}/translated_document:
+    get:
+      summary: Get translated document
+      description: >-
+        Gets the translated document associated with the given document ID. Returns the
+        translated document in the same format as the original source file. You must check
+        that the translation is complete before calling this method. You can use the Get
+        document status method to check the translation status.
+      operationId: getTranslatedDocument
+      tags:
+        - Documents
+      parameters:
+        - $ref: '#/components/parameters/Version'
+        - name: document_id
+          in: path
+          required: true
+          description: The document ID of the document that was submitted for translation.
+          schema:
+            type: string
+        - name: Accept
+          in: header
+          description: The type of the response. Match the file type of the source file.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Translated document binary response
+          content:
+            application/powerpoint:
+              schema:
+                type: string
+                format: binary
+            application/mspowerpoint:
+              schema:
+                type: string
+                format: binary
+            application/msword:
+              schema:
+                type: string
+                format: binary
+            application/vnd.openxmlformats-officedocument.presentationml.presentation:
+              schema:
+                type: string
+                format: binary
+            application/vnd.openxmlformats-officedocument.wordprocessingml.document:
+              schema:
+                type: string
+                format: binary
+            application/vnd.ms-powerpoint:
+              schema:
+                type: string
+                format: binary
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+            text/html:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: IBM Cloud IAM token authentication
+
+  parameters:
+    Version:
+      name: version
+      in: query
+      required: true
+      description: >-
+        Release date of the API version you want to use. Specify dates in YYYY-MM-DD format.
+        The current version is 2018-05-01.
+      schema:
+        type: string
+        example: '2018-05-01'
+
+  responses:
+    BadRequest:
+      description: Bad request - invalid input parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Unauthorized:
+      description: Unauthorized - invalid or missing credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Forbidden:
+      description: Forbidden - insufficient permissions
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    NotFound:
+      description: Not found - resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Conflict:
+      description: Conflict - resource already exists or limit reached
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    PayloadTooLarge:
+      description: Payload too large - file exceeds size limit
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    UnsupportedMediaType:
+      description: Unsupported media type - file format not supported
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    InternalServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+  schemas:
+    Language:
+      type: object
+      description: Response payload for languages.
+      properties:
+        language:
+          type: string
+          description: The language code for the language (for example, zh for Mandarin Chinese).
+          example: en
+        language_name:
+          type: string
+          description: The name of the language in English (for example, Mandarin Chinese).
+          example: English
+        native_language_name:
+          type: string
+          description: The native name of the language (for example, 中文 for Mandarin Chinese).
+          example: English
+        country_code:
+          type: string
+          description: The country code for the language (for example, CN for Mandarin Chinese).
+          example: US
+        words_separated:
+          type: boolean
+          description: Indicates whether words of the language are separated by whitespace.
+          example: true
+        direction:
+          type: string
+          description: Indicates the direction of the language (right_to_left or left_to_right).
+          enum:
+            - right_to_left
+            - left_to_right
+          example: left_to_right
+        supported_as_source:
+          type: boolean
+          description: Indicates whether the language can be used as a source language for translation.
+          example: true
+        supported_as_target:
+          type: boolean
+          description: Indicates whether the language can be used as a target language for translation.
+          example: true
+        identifiable:
+          type: boolean
+          description: Indicates whether the language supports automatic detection.
+          example: true
+
+    Languages:
+      type: object
+      description: The response type for listing supported languages.
+      properties:
+        languages:
+          type: array
+          description: A list of supported languages.
+          items:
+            $ref: '#/components/schemas/Language'
+
+    IdentifiableLanguage:
+      type: object
+      description: IdentifiableLanguage is the language and its name.
+      properties:
+        language:
+          type: string
+          description: The language code for an identifiable language.
+          example: en
+        name:
+          type: string
+          description: The name of the identifiable language.
+          example: English
+
+    IdentifiableLanguages:
+      type: object
+      description: IdentifiableLanguages is the list of identifiable languages.
+      properties:
+        languages:
+          type: array
+          description: A list of identifiable languages.
+          items:
+            $ref: '#/components/schemas/IdentifiableLanguage'
+
+    TranslateRequest:
+      type: object
+      required:
+        - text
+      description: The request body for translate calls.
+      properties:
+        text:
+          type: array
+          description: Input text in UTF-8 encoding. Submit a maximum of 50 KB of text.
+          items:
+            type: string
+          example:
+            - Hello, world!
+        model_id:
+          type: string
+          description: >-
+            A globally unique string that identifies the underlying model that is used for
+            translation.
+          example: en-es
+        source:
+          type: string
+          description: >-
+            Language code that specifies the language of the input text. If omitted, the
+            service derives the source language from the input text. The input must contain
+            sufficient text for the service to identify the language reliably.
+          example: en
+        target:
+          type: string
+          description: >-
+            Language code that specifies the target language for translation. Required if
+            model_id is not specified.
+          example: es
+
+    Translation:
+      type: object
+      description: Translation represents the translation result.
+      properties:
+        translation:
+          type: string
+          description: Translation output in UTF-8 encoding.
+          example: Hola, mundo!
+
+    TranslationResult:
+      type: object
+      description: TranslationResult is the result returned from a call to the translate a list of strings.
+      properties:
+        word_count:
+          type: integer
+          description: Number of words in the input text.
+          example: 2
+        character_count:
+          type: integer
+          description: Number of characters in the input text.
+          example: 13
+        detected_language:
+          type: string
+          description: >-
+            The language code of the source text if the source language was automatically
+            detected. If the source language was passed as a parameter, this field is omitted.
+          example: en
+        detected_language_confidence:
+          type: number
+          format: double
+          description: >-
+            A score between 0 and 1 indicating the confidence of source language detection.
+            A higher value indicates greater confidence. This is returned only when the service
+            detects the source language automatically.
+          minimum: 0
+          maximum: 1
+          example: 0.998
+        translations:
+          type: array
+          description: List of translation output in UTF-8, corresponding to the input text entries.
+          items:
+            $ref: '#/components/schemas/Translation'
+
+    IdentifiedLanguage:
+      type: object
+      description: IdentifiedLanguage is the language and confidence score.
+      properties:
+        language:
+          type: string
+          description: The language code for an identified language.
+          example: en
+        confidence:
+          type: number
+          format: double
+          description: >-
+            The confidence score for the identified language. The score ranges from 0 to 1,
+            with higher scores indicating greater confidence.
+          minimum: 0
+          maximum: 1
+          example: 0.998
+
+    IdentifiedLanguages:
+      type: object
+      description: IdentifiedLanguages is the list of identified languages.
+      properties:
+        languages:
+          type: array
+          description: A ranking of identified languages with confidence scores.
+          items:
+            $ref: '#/components/schemas/IdentifiedLanguage'
+
+    TranslationModel:
+      type: object
+      description: Response payload for models.
+      properties:
+        model_id:
+          type: string
+          description: >-
+            A globally unique string that identifies the underlying model that is used for
+            translation.
+          example: en-es
+        name:
+          type: string
+          description: >-
+            Optional name that can be specified when the model is created.
+          example: My custom model
+        source:
+          type: string
+          description: Translation source language code.
+          example: en
+        target:
+          type: string
+          description: Translation target language code.
+          example: es
+        base_model_id:
+          type: string
+          description: >-
+            Model ID of the base model that was used to customize the model. If the model is
+            not a custom model, this will be an empty string.
+          example: en-es
+        domain:
+          type: string
+          description: The domain of the translation model.
+          example: general
+        customizable:
+          type: boolean
+          description: Whether this model can be used as a base for customization.
+          example: true
+        default_model:
+          type: boolean
+          description: >-
+            Whether or not the model is a default model. A default model is the model for a
+            given language pair that will be used when that language pair is specified in the
+            source and target parameters.
+          example: true
+        owner:
+          type: string
+          description: >-
+            Returns the Bluemix ID of the instance that created the model, or an empty string
+            if it is a model that is trained by IBM.
+          example: ''
+        status:
+          type: string
+          description: >-
+            Availability of a model. Valid values are: available, training, error.
+          enum:
+            - available
+            - training
+            - error
+          example: available
+
+    TranslationModels:
+      type: object
+      description: The response type for listing existing translation models.
+      properties:
+        models:
+          type: array
+          description: An array of available models.
+          items:
+            $ref: '#/components/schemas/TranslationModel'
+
+    DeleteModelResult:
+      type: object
+      description: DeleteModelResult contains the status of the request to delete a model.
+      properties:
+        status:
+          type: string
+          description: "OK indicates that the model was successfully deleted."
+          example: OK
+
+    DocumentStatus:
+      type: object
+      description: Information about the submitted document and the translation process.
+      properties:
+        document_id:
+          type: string
+          description: System generated ID identifying a document being translated using one specific translation model.
+          example: abc123
+        filename:
+          type: string
+          description: filename included in the request or extracted from the file name.
+          example: report.docx
+        status:
+          type: string
+          description: >-
+            The status of the translation job associated with a submitted document.
+            Valid values are: processing, available, failed, deleted.
+          enum:
+            - processing
+            - available
+            - failed
+            - deleted
+          example: available
+        model_id:
+          type: string
+          description: >-
+            A globally unique string that identifies the underlying model that is used for
+            translation.
+          example: en-es
+        base_model_id:
+          type: string
+          description: >-
+            Model ID of the base model that was used to customize the model. If the model is
+            not a custom model, this will be an empty string.
+          example: en-es
+        source:
+          type: string
+          description: Translation source language code.
+          example: en
+        detected_language_confidence:
+          type: number
+          format: double
+          description: >-
+            The confidence score for the source language identification. Returned only when
+            the model used automatic language identification.
+          minimum: 0
+          maximum: 1
+          example: 0.998
+        target:
+          type: string
+          description: Translation target language code.
+          example: es
+        created:
+          type: string
+          format: date-time
+          description: The time when the document was submitted.
+        completed:
+          type: string
+          format: date-time
+          description: The time when the translation completed (available or failed).
+        word_count:
+          type: integer
+          description: The number of words in the source document.
+          example: 523
+        character_count:
+          type: integer
+          description: The number of characters in the source document, present only if available.
+          example: 3142
+
+    DocumentList:
+      type: object
+      description: DocumentList contains the list of documents with status.
+      properties:
+        documents:
+          type: array
+          description: An array of all previously submitted documents.
+          items:
+            $ref: '#/components/schemas/DocumentStatus'
+
+    ErrorResponse:
+      type: object
+      description: Error response object.
+      properties:
+        code:
+          type: integer
+          description: HTTP status code.
+          example: 400
+        error:
+          type: string
+          description: Human-readable error description.
+          example: Bad request
+        description:
+          type: string
+          description: Detailed description of the error.

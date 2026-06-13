@@ -1,0 +1,37 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/ibm-translate/main/json-schema/translation-request.json",
+  "title": "TranslateRequest",
+  "description": "The request body for IBM Watson Language Translator translate calls.",
+  "type": "object",
+  "required": ["text"],
+  "properties": {
+    "text": {
+      "type": "array",
+      "description": "Input text in UTF-8 encoding. Submit a maximum of 50 KB of text.",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "example": ["Hello, world!"]
+    },
+    "model_id": {
+      "type": "string",
+      "description": "A globally unique string that identifies the underlying model used for translation (e.g., en-es for English to Spanish).",
+      "example": "en-es"
+    },
+    "source": {
+      "type": "string",
+      "description": "Language code specifying the language of the input text. If omitted, the service detects the source language automatically.",
+      "pattern": "^[a-z]{2,3}(-[A-Z]{2,4})?$",
+      "example": "en"
+    },
+    "target": {
+      "type": "string",
+      "description": "Language code specifying the target language for translation. Required if model_id is not specified.",
+      "pattern": "^[a-z]{2,3}(-[A-Z]{2,4})?$",
+      "example": "es"
+    }
+  },
+  "additionalProperties": false
+}

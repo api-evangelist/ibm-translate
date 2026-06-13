@@ -1,0 +1,34 @@
+{
+  "summary": "Translate text from English to Spanish",
+  "description": "Example of translating English text to Spanish using IBM Watson Language Translator V3",
+  "request": {
+    "method": "POST",
+    "url": "https://api.us-south.language-translator.watson.cloud.ibm.com/v3/translate?version=2018-05-01",
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer <IAM_TOKEN>"
+    },
+    "body": {
+      "text": [
+        "Hello, world!",
+        "How are you today?"
+      ],
+      "model_id": "en-es"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "word_count": 6,
+      "character_count": 31,
+      "translations": [
+        {
+          "translation": "Hola, mundo!"
+        },
+        {
+          "translation": "¿Cómo estás hoy?"
+        }
+      ]
+    }
+  }
+}
