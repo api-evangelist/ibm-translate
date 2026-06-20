@@ -8,7 +8,7 @@ description: >-
   translation models using TMX, XLIFF, or CSV training data. The service supported neural
   machine translation (NMT) and was available through IBM Cloud. IBM deprecated the service
   in June 2023 and fully withdrew it in December 2024.
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 tags:
   - Translation
   - Natural Language Processing
@@ -29,7 +29,7 @@ apis:
       models. The base URL is https://{region}.ml.cloud.ibm.com with IAM authentication via
       Bearer tokens. API version parameter 2018-05-01 is required on all requests. The service
       was deprecated June 2023 and withdrawn December 2024.
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     humanURL: https://cloud.ibm.com/apidocs/language-translator
     baseURL: https://api.us-south.language-translator.watson.cloud.ibm.com
     tags:
