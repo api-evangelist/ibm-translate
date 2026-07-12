@@ -51,6 +51,12 @@ apis:
       - type: OpenAPI
         url: openapi/openapi.yaml
 common:
+  - type: VulnerabilityDisclosure
+    url: security/ibm-translate-vulnerability-disclosure.yml
+  - type: DomainSecurity
+    url: security/ibm-translate-domain-security.yml
+  - type: Authentication
+    url: authentication/ibm-translate-authentication.yml
   - type: Website
     url: https://www.ibm.com/cloud/watson-language-translator
   - type: Documentation
