@@ -51,6 +51,8 @@ apis:
       - type: OpenAPI
         url: openapi/openapi.yaml
 common:
+  - type: AgenticAccess
+    url: agentic-access/ibm-translate-agentic-access.yml
   - type: VulnerabilityDisclosure
     url: security/ibm-translate-vulnerability-disclosure.yml
   - type: DomainSecurity
