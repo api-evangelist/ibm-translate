@@ -1,0 +1,211 @@
+openapi: 3.0.3
+info:
+  title: IBM Watson Language Translator V3 Documents Languages API
+  description: 'REST API for translating text between 35+ languages, identifying the language of input text, listing available translation models, and creating or managing custom translation models. The base URL varies by region. IAM authentication via Bearer tokens is required. The API version parameter 2018-05-01 is required on all requests. NOTE: This service was deprecated in June 2023 and withdrawn in December 2024.'
+  version: 3.0.0
+  contact:
+    name: IBM Watson
+    url: https://cloud.ibm.com/apidocs/language-translator
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  x-deprecated: true
+  x-deprecation-date: '2023-06-01'
+  x-withdrawal-date: '2024-12-01'
+servers:
+- url: https://api.us-south.language-translator.watson.cloud.ibm.com
+  description: US South
+- url: https://api.us-east.language-translator.watson.cloud.ibm.com
+  description: US East
+- url: https://api.eu-de.language-translator.watson.cloud.ibm.com
+  description: Frankfurt (EU)
+- url: https://api.eu-gb.language-translator.watson.cloud.ibm.com
+  description: London (EU)
+- url: https://api.au-syd.language-translator.watson.cloud.ibm.com
+  description: Sydney
+- url: https://api.jp-tok.language-translator.watson.cloud.ibm.com
+  description: Tokyo
+- url: https://api.kr-seo.language-translator.watson.cloud.ibm.com
+  description: Seoul
+security:
+- BearerAuth: []
+tags:
+- name: Languages
+  description: Operations for listing supported and identifiable languages
+paths:
+  /v3/languages:
+    get:
+      summary: List supported languages
+      description: Returns a list of supported languages for translation. The method returns an array of supported languages with information about each language. Languages are listed in alphabetical order by language code (for example, af, ar, az).
+      operationId: listLanguages
+      tags:
+      - Languages
+      parameters:
+      - $ref: '#/components/parameters/Version'
+      responses:
+        '200':
+          description: Successful response with list of supported languages
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Languages'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /v3/identifiable_languages:
+    get:
+      summary: List identifiable languages
+      description: Lists the languages that the service can identify. Returns the language code (for example, en for English or es for Spanish) and name of each language.
+      operationId: listIdentifiableLanguages
+      tags:
+      - Languages
+      parameters:
+      - $ref: '#/components/parameters/Version'
+      responses:
+        '200':
+          description: Successful response with list of identifiable languages
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IdentifiableLanguages'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+components:
+  responses:
+    Forbidden:
+      description: Forbidden - insufficient permissions
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Unauthorized:
+      description: Unauthorized - invalid or missing credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    InternalServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    BadRequest:
+      description: Bad request - invalid input parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  schemas:
+    Languages:
+      type: object
+      description: The response type for listing supported languages.
+      properties:
+        languages:
+          type: array
+          description: A list of supported languages.
+          items:
+            $ref: '#/components/schemas/Language'
+    IdentifiableLanguages:
+      type: object
+      description: IdentifiableLanguages is the list of identifiable languages.
+      properties:
+        languages:
+          type: array
+          description: A list of identifiable languages.
+          items:
+            $ref: '#/components/schemas/IdentifiableLanguage'
+    ErrorResponse:
+      type: object
+      description: Error response object.
+      properties:
+        code:
+          type: integer
+          description: HTTP status code.
+          example: 400
+        error:
+          type: string
+          description: Human-readable error description.
+          example: Bad request
+        description:
+          type: string
+          description: Detailed description of the error.
+    Language:
+      type: object
+      description: Response payload for languages.
+      properties:
+        language:
+          type: string
+          description: The language code for the language (for example, zh for Mandarin Chinese).
+          example: en
+        language_name:
+          type: string
+          description: The name of the language in English (for example, Mandarin Chinese).
+          example: English
+        native_language_name:
+          type: string
+          description: The native name of the language (for example, 中文 for Mandarin Chinese).
+          example: English
+        country_code:
+          type: string
+          description: The country code for the language (for example, CN for Mandarin Chinese).
+          example: US
+        words_separated:
+          type: boolean
+          description: Indicates whether words of the language are separated by whitespace.
+          example: true
+        direction:
+          type: string
+          description: Indicates the direction of the language (right_to_left or left_to_right).
+          enum:
+          - right_to_left
+          - left_to_right
+          example: left_to_right
+        supported_as_source:
+          type: boolean
+          description: Indicates whether the language can be used as a source language for translation.
+          example: true
+        supported_as_target:
+          type: boolean
+          description: Indicates whether the language can be used as a target language for translation.
+          example: true
+        identifiable:
+          type: boolean
+          description: Indicates whether the language supports automatic detection.
+          example: true
+    IdentifiableLanguage:
+      type: object
+      description: IdentifiableLanguage is the language and its name.
+      properties:
+        language:
+          type: string
+          description: The language code for an identifiable language.
+          example: en
+        name:
+          type: string
+          description: The name of the identifiable language.
+          example: English
+  parameters:
+    Version:
+      name: version
+      in: query
+      required: true
+      description: Release date of the API version you want to use. Specify dates in YYYY-MM-DD format. The current version is 2018-05-01.
+      schema:
+        type: string
+        example: '2018-05-01'
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: IBM Cloud IAM token authentication
+externalDocs:
+  description: IBM Cloud API Docs - Language Translator
+  url: https://cloud.ibm.com/apidocs/language-translator

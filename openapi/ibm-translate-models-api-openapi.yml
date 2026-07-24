@@ -1,0 +1,323 @@
+openapi: 3.0.3
+info:
+  title: IBM Watson Language Translator V3 Documents Models API
+  description: 'REST API for translating text between 35+ languages, identifying the language of input text, listing available translation models, and creating or managing custom translation models. The base URL varies by region. IAM authentication via Bearer tokens is required. The API version parameter 2018-05-01 is required on all requests. NOTE: This service was deprecated in June 2023 and withdrawn in December 2024.'
+  version: 3.0.0
+  contact:
+    name: IBM Watson
+    url: https://cloud.ibm.com/apidocs/language-translator
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  x-deprecated: true
+  x-deprecation-date: '2023-06-01'
+  x-withdrawal-date: '2024-12-01'
+servers:
+- url: https://api.us-south.language-translator.watson.cloud.ibm.com
+  description: US South
+- url: https://api.us-east.language-translator.watson.cloud.ibm.com
+  description: US East
+- url: https://api.eu-de.language-translator.watson.cloud.ibm.com
+  description: Frankfurt (EU)
+- url: https://api.eu-gb.language-translator.watson.cloud.ibm.com
+  description: London (EU)
+- url: https://api.au-syd.language-translator.watson.cloud.ibm.com
+  description: Sydney
+- url: https://api.jp-tok.language-translator.watson.cloud.ibm.com
+  description: Tokyo
+- url: https://api.kr-seo.language-translator.watson.cloud.ibm.com
+  description: Seoul
+security:
+- BearerAuth: []
+tags:
+- name: Models
+  description: Operations for managing translation models
+paths:
+  /v3/models:
+    get:
+      summary: List models
+      description: Lists available translation models. You can filter models by source or target language code and by whether the models are the default. Use the model_id property of an item in the response list to get the string value to pass to the model_id parameter of the translate method.
+      operationId: listModels
+      tags:
+      - Models
+      parameters:
+      - $ref: '#/components/parameters/Version'
+      - name: source
+        in: query
+        description: Specify a language code to filter results by source language. For example, returns models that translate from English (en).
+        schema:
+          type: string
+          example: en
+      - name: target
+        in: query
+        description: Specify a language code to filter results by target language. For example, returns models that translate to Spanish (es).
+        schema:
+          type: string
+          example: es
+      - name: default
+        in: query
+        description: If the default parameter isn't specified, the service will return all models (default and non-default). When set to true, the response includes only default models. When set to false, the response includes only custom models.
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: Successful response with list of translation models
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TranslationModels'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    post:
+      summary: Create model
+      description: Uploads training files to customize a translation model. You can customize a model with a forced glossary, a parallel corpus, or both. The service limits the number of custom models that you can create per language pair to a maximum of 10.
+      operationId: createModel
+      tags:
+      - Models
+      parameters:
+      - $ref: '#/components/parameters/Version'
+      - name: base_model_id
+        in: query
+        required: true
+        description: The ID of the translation model to use as the base for customization. To see available models and IDs, use the List models method. Most models that are provided with the service are customizable. In addition, all models that you create with parallel corpora customization can be further customized with a forced glossary.
+        schema:
+          type: string
+          example: en-es
+      - name: name
+        in: query
+        description: An optional model name that you can use to identify the model. Valid characters are letters, numbers, dashes, underscores, spaces and apostrophes. The maximum length of the name is 32 characters.
+        schema:
+          type: string
+          maxLength: 32
+          example: my-custom-model
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                forced_glossary:
+                  type: string
+                  format: binary
+                  description: A file with forced glossary terms for the source and target languages. The customizations in the file completely override the domain translaton data, including high frequency or high confidence phrase translations. Use a glossary file if you want your translation preferences to be applied consistently for a language pair. You can upload only one glossary file per model. The format of the file can be TMX or CSV.
+                parallel_corpus:
+                  type: string
+                  format: binary
+                  description: A file with parallel sentences for the source and target languages. The target language translations of source language phrases in the dictionary are given equal weight as phrases that the service discovers automatically from bilingual corpora. Use parallel corpora when you want your translation preferences to be applied in context and when you want your model to learn from additional bilingual text. You can upload only one parallel corpus file per model. The format of the file must be TMX.
+      responses:
+        '200':
+          description: Custom model successfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TranslationModel'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /v3/models/{model_id}:
+    get:
+      summary: Get model details
+      description: Gets information about a translation model, including training status for custom models. Use this method to poll the status of your customization request. You can also use it to confirm that the default models are available.
+      operationId: getModel
+      tags:
+      - Models
+      parameters:
+      - $ref: '#/components/parameters/Version'
+      - name: model_id
+        in: path
+        required: true
+        description: Model ID of the model to get.
+        schema:
+          type: string
+          example: en-es
+      responses:
+        '200':
+          description: Successful response with model details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TranslationModel'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    delete:
+      summary: Delete model
+      description: Deletes a custom translation model. You can delete only custom models, not the models provided as defaults. If the operation is successful, the status code of the response is HTTP 200.
+      operationId: deleteModel
+      tags:
+      - Models
+      parameters:
+      - $ref: '#/components/parameters/Version'
+      - name: model_id
+        in: path
+        required: true
+        description: Model ID of the model to delete.
+        schema:
+          type: string
+          example: my-custom-model-id
+      responses:
+        '200':
+          description: Model deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteModelResult'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+components:
+  schemas:
+    TranslationModel:
+      type: object
+      description: Response payload for models.
+      properties:
+        model_id:
+          type: string
+          description: A globally unique string that identifies the underlying model that is used for translation.
+          example: en-es
+        name:
+          type: string
+          description: Optional name that can be specified when the model is created.
+          example: My custom model
+        source:
+          type: string
+          description: Translation source language code.
+          example: en
+        target:
+          type: string
+          description: Translation target language code.
+          example: es
+        base_model_id:
+          type: string
+          description: Model ID of the base model that was used to customize the model. If the model is not a custom model, this will be an empty string.
+          example: en-es
+        domain:
+          type: string
+          description: The domain of the translation model.
+          example: general
+        customizable:
+          type: boolean
+          description: Whether this model can be used as a base for customization.
+          example: true
+        default_model:
+          type: boolean
+          description: Whether or not the model is a default model. A default model is the model for a given language pair that will be used when that language pair is specified in the source and target parameters.
+          example: true
+        owner:
+          type: string
+          description: Returns the Bluemix ID of the instance that created the model, or an empty string if it is a model that is trained by IBM.
+          example: ''
+        status:
+          type: string
+          description: 'Availability of a model. Valid values are: available, training, error.'
+          enum:
+          - available
+          - training
+          - error
+          example: available
+    TranslationModels:
+      type: object
+      description: The response type for listing existing translation models.
+      properties:
+        models:
+          type: array
+          description: An array of available models.
+          items:
+            $ref: '#/components/schemas/TranslationModel'
+    ErrorResponse:
+      type: object
+      description: Error response object.
+      properties:
+        code:
+          type: integer
+          description: HTTP status code.
+          example: 400
+        error:
+          type: string
+          description: Human-readable error description.
+          example: Bad request
+        description:
+          type: string
+          description: Detailed description of the error.
+    DeleteModelResult:
+      type: object
+      description: DeleteModelResult contains the status of the request to delete a model.
+      properties:
+        status:
+          type: string
+          description: OK indicates that the model was successfully deleted.
+          example: OK
+  responses:
+    NotFound:
+      description: Not found - resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Forbidden:
+      description: Forbidden - insufficient permissions
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Unauthorized:
+      description: Unauthorized - invalid or missing credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    InternalServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Conflict:
+      description: Conflict - resource already exists or limit reached
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    BadRequest:
+      description: Bad request - invalid input parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  parameters:
+    Version:
+      name: version
+      in: query
+      required: true
+      description: Release date of the API version you want to use. Specify dates in YYYY-MM-DD format. The current version is 2018-05-01.
+      schema:
+        type: string
+        example: '2018-05-01'
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: IBM Cloud IAM token authentication
+externalDocs:
+  description: IBM Cloud API Docs - Language Translator
+  url: https://cloud.ibm.com/apidocs/language-translator

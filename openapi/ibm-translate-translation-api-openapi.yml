@@ -1,0 +1,247 @@
+openapi: 3.0.3
+info:
+  title: IBM Watson Language Translator V3 Documents Translation API
+  description: 'REST API for translating text between 35+ languages, identifying the language of input text, listing available translation models, and creating or managing custom translation models. The base URL varies by region. IAM authentication via Bearer tokens is required. The API version parameter 2018-05-01 is required on all requests. NOTE: This service was deprecated in June 2023 and withdrawn in December 2024.'
+  version: 3.0.0
+  contact:
+    name: IBM Watson
+    url: https://cloud.ibm.com/apidocs/language-translator
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  x-deprecated: true
+  x-deprecation-date: '2023-06-01'
+  x-withdrawal-date: '2024-12-01'
+servers:
+- url: https://api.us-south.language-translator.watson.cloud.ibm.com
+  description: US South
+- url: https://api.us-east.language-translator.watson.cloud.ibm.com
+  description: US East
+- url: https://api.eu-de.language-translator.watson.cloud.ibm.com
+  description: Frankfurt (EU)
+- url: https://api.eu-gb.language-translator.watson.cloud.ibm.com
+  description: London (EU)
+- url: https://api.au-syd.language-translator.watson.cloud.ibm.com
+  description: Sydney
+- url: https://api.jp-tok.language-translator.watson.cloud.ibm.com
+  description: Tokyo
+- url: https://api.kr-seo.language-translator.watson.cloud.ibm.com
+  description: Seoul
+security:
+- BearerAuth: []
+tags:
+- name: Translation
+  description: Operations for translating text
+paths:
+  /v3/translate:
+    post:
+      summary: Translate
+      description: Translates the input text from the source language to the target language. Specify a model ID that indicates the source and target languages, or specify the source and target languages individually. You can omit the source language to have the service detect it for you. To use a default model, specify only the target language. IBM Watson Language Translator may reject requests if the combined inputs exceed 50 KB.
+      operationId: translate
+      tags:
+      - Translation
+      parameters:
+      - $ref: '#/components/parameters/Version'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TranslateRequest'
+      responses:
+        '200':
+          description: Successful translation response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TranslationResult'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /v3/identify:
+    post:
+      summary: Identify language
+      description: Identifies the language of the input text. Returns a list of suggested languages with confidence levels. The service defaults to returning the top five detected languages, but the number of languages may be lower if the text provides little evidence for particular languages.
+      operationId: identify
+      tags:
+      - Translation
+      parameters:
+      - $ref: '#/components/parameters/Version'
+      requestBody:
+        required: true
+        content:
+          text/plain:
+            schema:
+              type: string
+              description: Input text in UTF-8 format.
+              example: Hello, world!
+      responses:
+        '200':
+          description: Successful language identification response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IdentifiedLanguages'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+components:
+  schemas:
+    IdentifiedLanguage:
+      type: object
+      description: IdentifiedLanguage is the language and confidence score.
+      properties:
+        language:
+          type: string
+          description: The language code for an identified language.
+          example: en
+        confidence:
+          type: number
+          format: double
+          description: The confidence score for the identified language. The score ranges from 0 to 1, with higher scores indicating greater confidence.
+          minimum: 0
+          maximum: 1
+          example: 0.998
+    IdentifiedLanguages:
+      type: object
+      description: IdentifiedLanguages is the list of identified languages.
+      properties:
+        languages:
+          type: array
+          description: A ranking of identified languages with confidence scores.
+          items:
+            $ref: '#/components/schemas/IdentifiedLanguage'
+    Translation:
+      type: object
+      description: Translation represents the translation result.
+      properties:
+        translation:
+          type: string
+          description: Translation output in UTF-8 encoding.
+          example: Hola, mundo!
+    TranslationResult:
+      type: object
+      description: TranslationResult is the result returned from a call to the translate a list of strings.
+      properties:
+        word_count:
+          type: integer
+          description: Number of words in the input text.
+          example: 2
+        character_count:
+          type: integer
+          description: Number of characters in the input text.
+          example: 13
+        detected_language:
+          type: string
+          description: The language code of the source text if the source language was automatically detected. If the source language was passed as a parameter, this field is omitted.
+          example: en
+        detected_language_confidence:
+          type: number
+          format: double
+          description: A score between 0 and 1 indicating the confidence of source language detection. A higher value indicates greater confidence. This is returned only when the service detects the source language automatically.
+          minimum: 0
+          maximum: 1
+          example: 0.998
+        translations:
+          type: array
+          description: List of translation output in UTF-8, corresponding to the input text entries.
+          items:
+            $ref: '#/components/schemas/Translation'
+    TranslateRequest:
+      type: object
+      required:
+      - text
+      description: The request body for translate calls.
+      properties:
+        text:
+          type: array
+          description: Input text in UTF-8 encoding. Submit a maximum of 50 KB of text.
+          items:
+            type: string
+          example:
+          - Hello, world!
+        model_id:
+          type: string
+          description: A globally unique string that identifies the underlying model that is used for translation.
+          example: en-es
+        source:
+          type: string
+          description: Language code that specifies the language of the input text. If omitted, the service derives the source language from the input text. The input must contain sufficient text for the service to identify the language reliably.
+          example: en
+        target:
+          type: string
+          description: Language code that specifies the target language for translation. Required if model_id is not specified.
+          example: es
+    ErrorResponse:
+      type: object
+      description: Error response object.
+      properties:
+        code:
+          type: integer
+          description: HTTP status code.
+          example: 400
+        error:
+          type: string
+          description: Human-readable error description.
+          example: Bad request
+        description:
+          type: string
+          description: Detailed description of the error.
+  responses:
+    NotFound:
+      description: Not found - resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Forbidden:
+      description: Forbidden - insufficient permissions
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Unauthorized:
+      description: Unauthorized - invalid or missing credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    InternalServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    BadRequest:
+      description: Bad request - invalid input parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  parameters:
+    Version:
+      name: version
+      in: query
+      required: true
+      description: Release date of the API version you want to use. Specify dates in YYYY-MM-DD format. The current version is 2018-05-01.
+      schema:
+        type: string
+        example: '2018-05-01'
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: IBM Cloud IAM token authentication
+externalDocs:
+  description: IBM Cloud API Docs - Language Translator
+  url: https://cloud.ibm.com/apidocs/language-translator
