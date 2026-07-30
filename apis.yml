@@ -8,7 +8,20 @@ description: >-
   translation models using TMX, XLIFF, or CSV training data. The service supported neural
   machine translation (NMT) and was available through IBM Cloud. IBM deprecated the service
   in June 2023 and fully withdrew it in December 2024.
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: paid
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Paid · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/ibm-translate.png
 tags:
   - Translation
   - Natural Language Processing
@@ -21,35 +34,78 @@ created: '2026-06-13'
 modified: '2026-06-13'
 specificationVersion: '0.19'
 apis:
-  - aid: ibm-translate:language-translator-v3
-    name: Language Translator V3
-    description: >-
-      REST API for translating text between 35+ languages, identifying the language of input
-      text, listing available translation models, and creating or managing custom translation
-      models. The base URL is https://{region}.ml.cloud.ibm.com with IAM authentication via
-      Bearer tokens. API version parameter 2018-05-01 is required on all requests. The service
-      was deprecated June 2023 and withdrawn December 2024.
-    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-    humanURL: https://cloud.ibm.com/apidocs/language-translator
-    baseURL: https://api.us-south.language-translator.watson.cloud.ibm.com
-    tags:
-      - Translation
-      - Language Detection
-      - Neural Machine Translation
-      - Custom Models
-      - IBM Watson
-      - Deprecated
-    properties:
-      - type: Documentation
-        url: https://cloud.ibm.com/apidocs/language-translator
-      - type: GitHubRepository
-        url: https://github.com/watson-developer-cloud/python-sdk
-      - type: GitHubRepository
-        url: https://github.com/watson-developer-cloud/node-sdk
-      - type: Pricing
-        url: https://www.ibm.com/cloud/watson-language-translator/pricing
-      - type: OpenAPI
-        url: openapi/openapi.yaml
+- aid: ibm-translate:ibm-translate-documents-api
+  name: IBM Language Translator Documents API
+  description: Operations for translating documents
+  humanURL: https://cloud.ibm.com/apidocs/language-translator
+  baseURL: https://api.us-south.language-translator.watson.cloud.ibm.com
+  tags:
+  - Documents
+  properties:
+  - type: OpenAPI
+    url: openapi/ibm-translate-documents-api-openapi.yml
+  - type: Documentation
+    url: https://cloud.ibm.com/apidocs/language-translator
+  - type: GitHubRepository
+    url: https://github.com/watson-developer-cloud/python-sdk
+  - type: GitHubRepository
+    url: https://github.com/watson-developer-cloud/node-sdk
+  - type: Pricing
+    url: https://www.ibm.com/cloud/watson-language-translator/pricing
+- aid: ibm-translate:ibm-translate-languages-api
+  name: IBM Language Translator Languages API
+  description: Operations for listing supported and identifiable languages
+  humanURL: https://cloud.ibm.com/apidocs/language-translator
+  baseURL: https://api.us-south.language-translator.watson.cloud.ibm.com
+  tags:
+  - Languages
+  properties:
+  - type: OpenAPI
+    url: openapi/ibm-translate-languages-api-openapi.yml
+  - type: Documentation
+    url: https://cloud.ibm.com/apidocs/language-translator
+  - type: GitHubRepository
+    url: https://github.com/watson-developer-cloud/python-sdk
+  - type: GitHubRepository
+    url: https://github.com/watson-developer-cloud/node-sdk
+  - type: Pricing
+    url: https://www.ibm.com/cloud/watson-language-translator/pricing
+- aid: ibm-translate:ibm-translate-models-api
+  name: IBM Language Translator Models API
+  description: Operations for managing translation models
+  humanURL: https://cloud.ibm.com/apidocs/language-translator
+  baseURL: https://api.us-south.language-translator.watson.cloud.ibm.com
+  tags:
+  - Models
+  properties:
+  - type: OpenAPI
+    url: openapi/ibm-translate-models-api-openapi.yml
+  - type: Documentation
+    url: https://cloud.ibm.com/apidocs/language-translator
+  - type: GitHubRepository
+    url: https://github.com/watson-developer-cloud/python-sdk
+  - type: GitHubRepository
+    url: https://github.com/watson-developer-cloud/node-sdk
+  - type: Pricing
+    url: https://www.ibm.com/cloud/watson-language-translator/pricing
+- aid: ibm-translate:ibm-translate-translation-api
+  name: IBM Language Translator Translation API
+  description: Operations for translating text
+  humanURL: https://cloud.ibm.com/apidocs/language-translator
+  baseURL: https://api.us-south.language-translator.watson.cloud.ibm.com
+  tags:
+  - Translation
+  properties:
+  - type: OpenAPI
+    url: openapi/ibm-translate-translation-api-openapi.yml
+  - type: Documentation
+    url: https://cloud.ibm.com/apidocs/language-translator
+  - type: GitHubRepository
+    url: https://github.com/watson-developer-cloud/python-sdk
+  - type: GitHubRepository
+    url: https://github.com/watson-developer-cloud/node-sdk
+  - type: Pricing
+    url: https://www.ibm.com/cloud/watson-language-translator/pricing
 common:
   - type: AgenticAccess
     url: agentic-access/ibm-translate-agentic-access.yml
