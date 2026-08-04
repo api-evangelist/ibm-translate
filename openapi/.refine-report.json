@@ -1,0 +1,20 @@
+{
+  "provider": "ibm-translate",
+  "sources": [
+    "ibm-translate-documents-api-openapi.yml",
+    "ibm-translate-languages-api-openapi.yml",
+    "ibm-translate-models-api-openapi.yml",
+    "ibm-translate-translation-api-openapi.yml"
+  ],
+  "outputs": [
+    "ibm-translate-documents-api-openapi.yml",
+    "ibm-translate-languages-api-openapi.yml",
+    "ibm-translate-models-api-openapi.yml",
+    "ibm-translate-translation-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
