@@ -107,6 +107,17 @@ apis:
   - type: Pricing
     url: https://www.ibm.com/cloud/watson-language-translator/pricing
 common:
+  - type: IssueTracker
+    url: https://github.com/watson-developer-cloud/python-sdk/issues
+  - type: Releases
+    url: https://github.com/watson-developer-cloud/python-sdk/releases
+  - type: CodeOfConduct
+    url: https://github.com/watson-developer-cloud/python-sdk/blob/master/.github/CODE_OF_CONDUCT.md
+  - type: ContributionGuide
+    url: https://github.com/watson-developer-cloud/python-sdk/blob/master/CONTRIBUTING.md
+  - type: License
+    name: Apache-2.0
+    url: https://github.com/watson-developer-cloud/python-sdk/blob/master/LICENSE
   - type: AgenticAccess
     url: agentic-access/ibm-translate-agentic-access.yml
   - type: VulnerabilityDisclosure
