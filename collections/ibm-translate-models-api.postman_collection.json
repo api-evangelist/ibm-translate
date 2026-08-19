@@ -1,0 +1,1520 @@
+{
+  "item": [
+    {
+      "id": "ddde494b-658e-4c6a-94ad-589e4af27206",
+      "name": "Models",
+      "description": {
+        "content": "Operations for managing translation models",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "14d27c74-2150-41a9-8282-c428635f0920",
+          "name": "List models",
+          "request": {
+            "name": "List models",
+            "description": {
+              "content": "Lists available translation models. You can filter models by source or target language code and by whether the models are the default. Use the model_id property of an item in the response list to get the string value to pass to the model_id parameter of the translate method.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v3",
+                "models"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "version",
+                  "value": "<string>",
+                  "description": "(Required) Release date of the API version you want to use. Specify dates in YYYY-MM-DD format. The current version is 2018-05-01."
+                },
+                {
+                  "disabled": false,
+                  "key": "source",
+                  "value": "<string>",
+                  "description": "Specify a language code to filter results by source language. For example, returns models that translate from English (en)."
+                },
+                {
+                  "disabled": false,
+                  "key": "target",
+                  "value": "<string>",
+                  "description": "Specify a language code to filter results by target language. For example, returns models that translate to Spanish (es)."
+                },
+                {
+                  "disabled": false,
+                  "key": "default",
+                  "value": "<boolean>",
+                  "description": "If the default parameter isn't specified, the service will return all models (default and non-default). When set to true, the response includes only default models. When set to false, the response includes only custom models."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "44735709-21ea-47fa-82ab-200c105385b6",
+              "name": "Successful response with list of translation models",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "models"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "2018-05-01"
+                    },
+                    {
+                      "key": "source",
+                      "value": "en"
+                    },
+                    {
+                      "key": "target",
+                      "value": "es"
+                    },
+                    {
+                      "key": "default",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"models\": [\n    {\n      \"model_id\": \"en-es\",\n      \"name\": \"My custom model\",\n      \"source\": \"en\",\n      \"target\": \"es\",\n      \"base_model_id\": \"en-es\",\n      \"domain\": \"general\",\n      \"customizable\": true,\n      \"default_model\": true,\n      \"owner\": \"\",\n      \"status\": \"available\"\n    },\n    {\n      \"model_id\": \"en-es\",\n      \"name\": \"My custom model\",\n      \"source\": \"en\",\n      \"target\": \"es\",\n      \"base_model_id\": \"en-es\",\n      \"domain\": \"general\",\n      \"customizable\": true,\n      \"default_model\": true,\n      \"owner\": \"\",\n      \"status\": \"available\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "24c0acfc-2561-4c54-9f88-14e40bfda6ce",
+              "name": "Bad request - invalid input parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "models"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "2018-05-01"
+                    },
+                    {
+                      "key": "source",
+                      "value": "en"
+                    },
+                    {
+                      "key": "target",
+                      "value": "es"
+                    },
+                    {
+                      "key": "default",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 400,\n  \"error\": \"Bad request\",\n  \"description\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f9069cfd-d62a-4cbd-b87f-92cdccda3f4c",
+              "name": "Unauthorized - invalid or missing credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "models"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "2018-05-01"
+                    },
+                    {
+                      "key": "source",
+                      "value": "en"
+                    },
+                    {
+                      "key": "target",
+                      "value": "es"
+                    },
+                    {
+                      "key": "default",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 400,\n  \"error\": \"Bad request\",\n  \"description\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dcfd67c5-3e0d-4ff2-a907-f46762e896a3",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "models"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "2018-05-01"
+                    },
+                    {
+                      "key": "source",
+                      "value": "en"
+                    },
+                    {
+                      "key": "target",
+                      "value": "es"
+                    },
+                    {
+                      "key": "default",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 400,\n  \"error\": \"Bad request\",\n  \"description\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "dcfb95aa-3f57-4f53-afb0-c77a8a2658cf",
+          "name": "Create model",
+          "request": {
+            "name": "Create model",
+            "description": {
+              "content": "Uploads training files to customize a translation model. You can customize a model with a forced glossary, a parallel corpus, or both. The service limits the number of custom models that you can create per language pair to a maximum of 10.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v3",
+                "models"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "version",
+                  "value": "<string>",
+                  "description": "(Required) Release date of the API version you want to use. Specify dates in YYYY-MM-DD format. The current version is 2018-05-01."
+                },
+                {
+                  "disabled": false,
+                  "key": "base_model_id",
+                  "value": "<string>",
+                  "description": "(Required) The ID of the translation model to use as the base for customization. To see available models and IDs, use the List models method. Most models that are provided with the service are customizable. In addition, all models that you create with parallel corpora customization can be further customized with a forced glossary."
+                },
+                {
+                  "disabled": false,
+                  "key": "name",
+                  "value": "<string>",
+                  "description": "An optional model name that you can use to identify the model. Valid characters are letters, numbers, dashes, underscores, spaces and apostrophes. The maximum length of the name is 32 characters."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "forced_glossary",
+                  "type": "file",
+                  "description": "A file with forced glossary terms for the source and target languages. The customizations in the file completely override the domain translaton data, including high frequency or high confidence phrase translations. Use a glossary file if you want your translation preferences to be applied consistently for a language pair. You can upload only one glossary file per model. The format of the file can be TMX or CSV."
+                },
+                {
+                  "key": "parallel_corpus",
+                  "type": "file",
+                  "description": "A file with parallel sentences for the source and target languages. The target language translations of source language phrases in the dictionary are given equal weight as phrases that the service discovers automatically from bilingual corpora. Use parallel corpora when you want your translation preferences to be applied in context and when you want your model to learn from additional bilingual text. You can upload only one parallel corpus file per model. The format of the file must be TMX."
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "4b8864c8-787e-499e-997b-04fed60b6e8f",
+              "name": "Custom model successfully created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "models"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "2018-05-01"
+                    },
+                    {
+                      "key": "base_model_id",
+                      "value": "en-es"
+                    },
+                    {
+                      "key": "name",
+                      "value": "my-custom-model"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "A file with forced glossary terms for the source and target languages. The customizations in the file completely override the domain translaton data, including high frequency or high confidence phrase translations. Use a glossary file if you want your translation preferences to be applied consistently for a language pair. You can upload only one glossary file per model. The format of the file can be TMX or CSV.",
+                        "type": "text/plain"
+                      },
+                      "key": "forced_glossary",
+                      "value": "<binary>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "A file with parallel sentences for the source and target languages. The target language translations of source language phrases in the dictionary are given equal weight as phrases that the service discovers automatically from bilingual corpora. Use parallel corpora when you want your translation preferences to be applied in context and when you want your model to learn from additional bilingual text. You can upload only one parallel corpus file per model. The format of the file must be TMX.",
+                        "type": "text/plain"
+                      },
+                      "key": "parallel_corpus",
+                      "value": "<binary>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"model_id\": \"en-es\",\n  \"name\": \"My custom model\",\n  \"source\": \"en\",\n  \"target\": \"es\",\n  \"base_model_id\": \"en-es\",\n  \"domain\": \"general\",\n  \"customizable\": true,\n  \"default_model\": true,\n  \"owner\": \"\",\n  \"status\": \"available\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5d4db2c7-62a5-49d9-8461-d91028654700",
+              "name": "Bad request - invalid input parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "models"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "2018-05-01"
+                    },
+                    {
+                      "key": "base_model_id",
+                      "value": "en-es"
+                    },
+                    {
+                      "key": "name",
+                      "value": "my-custom-model"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "A file with forced glossary terms for the source and target languages. The customizations in the file completely override the domain translaton data, including high frequency or high confidence phrase translations. Use a glossary file if you want your translation preferences to be applied consistently for a language pair. You can upload only one glossary file per model. The format of the file can be TMX or CSV.",
+                        "type": "text/plain"
+                      },
+                      "key": "forced_glossary",
+                      "value": "<binary>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "A file with parallel sentences for the source and target languages. The target language translations of source language phrases in the dictionary are given equal weight as phrases that the service discovers automatically from bilingual corpora. Use parallel corpora when you want your translation preferences to be applied in context and when you want your model to learn from additional bilingual text. You can upload only one parallel corpus file per model. The format of the file must be TMX.",
+                        "type": "text/plain"
+                      },
+                      "key": "parallel_corpus",
+                      "value": "<binary>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 400,\n  \"error\": \"Bad request\",\n  \"description\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ac1ad416-cb32-483d-983e-c5ec4dcfec91",
+              "name": "Unauthorized - invalid or missing credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "models"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "2018-05-01"
+                    },
+                    {
+                      "key": "base_model_id",
+                      "value": "en-es"
+                    },
+                    {
+                      "key": "name",
+                      "value": "my-custom-model"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "A file with forced glossary terms for the source and target languages. The customizations in the file completely override the domain translaton data, including high frequency or high confidence phrase translations. Use a glossary file if you want your translation preferences to be applied consistently for a language pair. You can upload only one glossary file per model. The format of the file can be TMX or CSV.",
+                        "type": "text/plain"
+                      },
+                      "key": "forced_glossary",
+                      "value": "<binary>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "A file with parallel sentences for the source and target languages. The target language translations of source language phrases in the dictionary are given equal weight as phrases that the service discovers automatically from bilingual corpora. Use parallel corpora when you want your translation preferences to be applied in context and when you want your model to learn from additional bilingual text. You can upload only one parallel corpus file per model. The format of the file must be TMX.",
+                        "type": "text/plain"
+                      },
+                      "key": "parallel_corpus",
+                      "value": "<binary>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 400,\n  \"error\": \"Bad request\",\n  \"description\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ed68d3b0-65dd-4512-a4a1-029c98888e76",
+              "name": "Forbidden - insufficient permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "models"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "2018-05-01"
+                    },
+                    {
+                      "key": "base_model_id",
+                      "value": "en-es"
+                    },
+                    {
+                      "key": "name",
+                      "value": "my-custom-model"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "A file with forced glossary terms for the source and target languages. The customizations in the file completely override the domain translaton data, including high frequency or high confidence phrase translations. Use a glossary file if you want your translation preferences to be applied consistently for a language pair. You can upload only one glossary file per model. The format of the file can be TMX or CSV.",
+                        "type": "text/plain"
+                      },
+                      "key": "forced_glossary",
+                      "value": "<binary>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "A file with parallel sentences for the source and target languages. The target language translations of source language phrases in the dictionary are given equal weight as phrases that the service discovers automatically from bilingual corpora. Use parallel corpora when you want your translation preferences to be applied in context and when you want your model to learn from additional bilingual text. You can upload only one parallel corpus file per model. The format of the file must be TMX.",
+                        "type": "text/plain"
+                      },
+                      "key": "parallel_corpus",
+                      "value": "<binary>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 400,\n  \"error\": \"Bad request\",\n  \"description\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f471d5c3-4e94-455b-88af-50e7e8e839fb",
+              "name": "Conflict - resource already exists or limit reached",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "models"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "2018-05-01"
+                    },
+                    {
+                      "key": "base_model_id",
+                      "value": "en-es"
+                    },
+                    {
+                      "key": "name",
+                      "value": "my-custom-model"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "A file with forced glossary terms for the source and target languages. The customizations in the file completely override the domain translaton data, including high frequency or high confidence phrase translations. Use a glossary file if you want your translation preferences to be applied consistently for a language pair. You can upload only one glossary file per model. The format of the file can be TMX or CSV.",
+                        "type": "text/plain"
+                      },
+                      "key": "forced_glossary",
+                      "value": "<binary>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "A file with parallel sentences for the source and target languages. The target language translations of source language phrases in the dictionary are given equal weight as phrases that the service discovers automatically from bilingual corpora. Use parallel corpora when you want your translation preferences to be applied in context and when you want your model to learn from additional bilingual text. You can upload only one parallel corpus file per model. The format of the file must be TMX.",
+                        "type": "text/plain"
+                      },
+                      "key": "parallel_corpus",
+                      "value": "<binary>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 400,\n  \"error\": \"Bad request\",\n  \"description\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "16479a99-ca56-4efe-9564-e46994782c3f",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "models"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "2018-05-01"
+                    },
+                    {
+                      "key": "base_model_id",
+                      "value": "en-es"
+                    },
+                    {
+                      "key": "name",
+                      "value": "my-custom-model"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "A file with forced glossary terms for the source and target languages. The customizations in the file completely override the domain translaton data, including high frequency or high confidence phrase translations. Use a glossary file if you want your translation preferences to be applied consistently for a language pair. You can upload only one glossary file per model. The format of the file can be TMX or CSV.",
+                        "type": "text/plain"
+                      },
+                      "key": "forced_glossary",
+                      "value": "<binary>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "A file with parallel sentences for the source and target languages. The target language translations of source language phrases in the dictionary are given equal weight as phrases that the service discovers automatically from bilingual corpora. Use parallel corpora when you want your translation preferences to be applied in context and when you want your model to learn from additional bilingual text. You can upload only one parallel corpus file per model. The format of the file must be TMX.",
+                        "type": "text/plain"
+                      },
+                      "key": "parallel_corpus",
+                      "value": "<binary>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 400,\n  \"error\": \"Bad request\",\n  \"description\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "75b83354-6a2b-4419-9b23-3a485075c45a",
+          "name": "Get model details",
+          "request": {
+            "name": "Get model details",
+            "description": {
+              "content": "Gets information about a translation model, including training status for custom models. Use this method to poll the status of your customization request. You can also use it to confirm that the default models are available.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v3",
+                "models",
+                ":model_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "version",
+                  "value": "<string>",
+                  "description": "(Required) Release date of the API version you want to use. Specify dates in YYYY-MM-DD format. The current version is 2018-05-01."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "model_id",
+                  "description": "(Required) Model ID of the model to get."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3663c53e-0d70-4cb5-9f98-96d72dc12a62",
+              "name": "Successful response with model details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "models",
+                    ":model_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "2018-05-01"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_id",
+                      "description": "(Required) Model ID of the model to get."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"model_id\": \"en-es\",\n  \"name\": \"My custom model\",\n  \"source\": \"en\",\n  \"target\": \"es\",\n  \"base_model_id\": \"en-es\",\n  \"domain\": \"general\",\n  \"customizable\": true,\n  \"default_model\": true,\n  \"owner\": \"\",\n  \"status\": \"available\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e018c4cd-8bc9-4a63-8a88-3159c5560348",
+              "name": "Unauthorized - invalid or missing credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "models",
+                    ":model_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "2018-05-01"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_id",
+                      "description": "(Required) Model ID of the model to get."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 400,\n  \"error\": \"Bad request\",\n  \"description\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6c9f3d29-9597-4226-95c6-b9974cf28602",
+              "name": "Not found - resource does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "models",
+                    ":model_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "2018-05-01"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_id",
+                      "description": "(Required) Model ID of the model to get."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 400,\n  \"error\": \"Bad request\",\n  \"description\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6650f99c-a7ab-4f5b-b313-b2c84d3034ba",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "models",
+                    ":model_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "2018-05-01"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_id",
+                      "description": "(Required) Model ID of the model to get."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 400,\n  \"error\": \"Bad request\",\n  \"description\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0ba3947d-9eff-454e-b450-dbdf0eb20f9d",
+          "name": "Delete model",
+          "request": {
+            "name": "Delete model",
+            "description": {
+              "content": "Deletes a custom translation model. You can delete only custom models, not the models provided as defaults. If the operation is successful, the status code of the response is HTTP 200.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v3",
+                "models",
+                ":model_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "version",
+                  "value": "<string>",
+                  "description": "(Required) Release date of the API version you want to use. Specify dates in YYYY-MM-DD format. The current version is 2018-05-01."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "model_id",
+                  "description": "(Required) Model ID of the model to delete."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f8486453-c322-457b-81e3-0302214fe237",
+              "name": "Model deleted successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "models",
+                    ":model_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "2018-05-01"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_id",
+                      "description": "(Required) Model ID of the model to delete."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"OK\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a9d12237-964d-4f0a-8ee7-17a77131f9b0",
+              "name": "Unauthorized - invalid or missing credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "models",
+                    ":model_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "2018-05-01"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_id",
+                      "description": "(Required) Model ID of the model to delete."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 400,\n  \"error\": \"Bad request\",\n  \"description\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "91a695c3-1e0e-49fe-8681-1e2f5b8223d3",
+              "name": "Forbidden - insufficient permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "models",
+                    ":model_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "2018-05-01"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_id",
+                      "description": "(Required) Model ID of the model to delete."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 400,\n  \"error\": \"Bad request\",\n  \"description\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "14ef92f7-b111-4c93-b0f2-61cff6c4b1e4",
+              "name": "Not found - resource does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "models",
+                    ":model_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "2018-05-01"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_id",
+                      "description": "(Required) Model ID of the model to delete."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 400,\n  \"error\": \"Bad request\",\n  \"description\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8f6f9974-25bd-4f78-a986-e2c25438a770",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "models",
+                    ":model_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "2018-05-01"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_id",
+                      "description": "(Required) Model ID of the model to delete."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 400,\n  \"error\": \"Bad request\",\n  \"description\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.us-south.language-translator.watson.cloud.ibm.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "25a8f8d9-b1bf-47d3-9c7a-b6f35cc9860b",
+    "name": "IBM Watson Language Translator V3 Documents Models API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for translating text between 35+ languages, identifying the language of input text, listing available translation models, and creating or managing custom translation models. The base URL varies by region. IAM authentication via Bearer tokens is required. The API version parameter 2018-05-01 is required on all requests. NOTE: This service was deprecated in June 2023 and withdrawn in December 2024.\n\nContact Support:\n Name: IBM Watson",
+      "type": "text/plain"
+    }
+  }
+}

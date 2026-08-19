@@ -1,0 +1,157 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "IBM Watson Language Translator V3 Documents Models API",
+    "version": "3.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Models",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List models",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.us-south.language-translator.watson.cloud.ibm.com/v3/models",
+            "params": [
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "Release date of the API version you want to use. Specify dates in YYYY-MM-DD format. The current version is 2018-05-01."
+              },
+              {
+                "name": "source",
+                "value": "",
+                "type": "query",
+                "description": "Specify a language code to filter results by source language. For example, returns models that translate from English (en)."
+              },
+              {
+                "name": "target",
+                "value": "",
+                "type": "query",
+                "description": "Specify a language code to filter results by target language. For example, returns models that translate to Spanish (es)."
+              },
+              {
+                "name": "default",
+                "value": "",
+                "type": "query",
+                "description": "If the default parameter isn't specified, the service will return all models (default and non-default). When set to true, the response includes only default models. When set to false, the response includes only custom models."
+              }
+            ]
+          },
+          "docs": "Lists available translation models. You can filter models by source or target language code and by whether the models are the default. Use the model_id property of an item in the response list to get the string value to pass to the model_id parameter of the translate method."
+        },
+        {
+          "info": {
+            "name": "Create model",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.us-south.language-translator.watson.cloud.ibm.com/v3/models",
+            "params": [
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "Release date of the API version you want to use. Specify dates in YYYY-MM-DD format. The current version is 2018-05-01."
+              },
+              {
+                "name": "base_model_id",
+                "value": "",
+                "type": "query",
+                "description": "The ID of the translation model to use as the base for customization. To see available models and IDs, use the List models method. Most models that are provided with the service are customizable. In addition, all models that you create with parallel corpora customization can be further customized with a forced glossary."
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "An optional model name that you can use to identify the model. Valid characters are letters, numbers, dashes, underscores, spaces and apostrophes. The maximum length of the name is 32 characters."
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "forced_glossary",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "parallel_corpus",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Uploads training files to customize a translation model. You can customize a model with a forced glossary, a parallel corpus, or both. The service limits the number of custom models that you can create per language pair to a maximum of 10."
+        },
+        {
+          "info": {
+            "name": "Get model details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.us-south.language-translator.watson.cloud.ibm.com/v3/models/:model_id",
+            "params": [
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "Release date of the API version you want to use. Specify dates in YYYY-MM-DD format. The current version is 2018-05-01."
+              },
+              {
+                "name": "model_id",
+                "value": "",
+                "type": "path",
+                "description": "Model ID of the model to get."
+              }
+            ]
+          },
+          "docs": "Gets information about a translation model, including training status for custom models. Use this method to poll the status of your customization request. You can also use it to confirm that the default models are available."
+        },
+        {
+          "info": {
+            "name": "Delete model",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.us-south.language-translator.watson.cloud.ibm.com/v3/models/:model_id",
+            "params": [
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "Release date of the API version you want to use. Specify dates in YYYY-MM-DD format. The current version is 2018-05-01."
+              },
+              {
+                "name": "model_id",
+                "value": "",
+                "type": "path",
+                "description": "Model ID of the model to delete."
+              }
+            ]
+          },
+          "docs": "Deletes a custom translation model. You can delete only custom models, not the models provided as defaults. If the operation is successful, the status code of the response is HTTP 200."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

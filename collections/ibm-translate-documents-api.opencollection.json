@@ -1,0 +1,183 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "IBM Watson Language Translator V3 Documents API",
+    "version": "3.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Documents",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List documents",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.us-south.language-translator.watson.cloud.ibm.com/v3/documents",
+            "params": [
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "Release date of the API version you want to use. Specify dates in YYYY-MM-DD format. The current version is 2018-05-01."
+              }
+            ]
+          },
+          "docs": "Lists documents that have been submitted for translation. Returns a list of documents with supporting meta data."
+        },
+        {
+          "info": {
+            "name": "Translate document",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.us-south.language-translator.watson.cloud.ibm.com/v3/documents",
+            "params": [
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "Release date of the API version you want to use. Specify dates in YYYY-MM-DD format. The current version is 2018-05-01."
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "filename",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "file_content_type",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "model_id",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "source",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "target",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "document_id",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Submit a document for translation. You can submit the document contents in the file parameter, and optionally the name of the document in the filename parameter. Specify the translation model to use for translation of the document contents by either providing a model ID using the model_id parameter or the source and target language code using the source and target parameters. IBM Watson Language Translator may reject documents submission requests if the file size limit is exceeded. The current s"
+        },
+        {
+          "info": {
+            "name": "Get document status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.us-south.language-translator.watson.cloud.ibm.com/v3/documents/:document_id",
+            "params": [
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "Release date of the API version you want to use. Specify dates in YYYY-MM-DD format. The current version is 2018-05-01."
+              },
+              {
+                "name": "document_id",
+                "value": "",
+                "type": "path",
+                "description": "The document ID of the document to retrieve status of."
+              }
+            ]
+          },
+          "docs": "Gets the translation status of a document. Returns the current status of a document translation. This method has to be invoked multiple times to determine when the translation has completed."
+        },
+        {
+          "info": {
+            "name": "Delete document",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.us-south.language-translator.watson.cloud.ibm.com/v3/documents/:document_id",
+            "params": [
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "Release date of the API version you want to use. Specify dates in YYYY-MM-DD format. The current version is 2018-05-01."
+              },
+              {
+                "name": "document_id",
+                "value": "",
+                "type": "path",
+                "description": "Document ID of the document to delete."
+              }
+            ]
+          },
+          "docs": "Deletes a document."
+        },
+        {
+          "info": {
+            "name": "Get translated document",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.us-south.language-translator.watson.cloud.ibm.com/v3/documents/:document_id/translated_document",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "Release date of the API version you want to use. Specify dates in YYYY-MM-DD format. The current version is 2018-05-01."
+              },
+              {
+                "name": "document_id",
+                "value": "",
+                "type": "path",
+                "description": "The document ID of the document that was submitted for translation."
+              }
+            ]
+          },
+          "docs": "Gets the translated document associated with the given document ID. Returns the translated document in the same format as the original source file. You must check that the translation is complete before calling this method. You can use the Get document status method to check the translation status."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

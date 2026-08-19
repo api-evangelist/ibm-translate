@@ -1,0 +1,66 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "IBM Watson Language Translator V3 Documents Translation API",
+    "version": "3.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Translation",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Translate",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.us-south.language-translator.watson.cloud.ibm.com/v3/translate",
+            "params": [
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "Release date of the API version you want to use. Specify dates in YYYY-MM-DD format. The current version is 2018-05-01."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Translates the input text from the source language to the target language. Specify a model ID that indicates the source and target languages, or specify the source and target languages individually. You can omit the source language to have the service detect it for you. To use a default model, specify only the target language. IBM Watson Language Translator may reject requests if the combined inputs exceed 50 KB."
+        },
+        {
+          "info": {
+            "name": "Identify language",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.us-south.language-translator.watson.cloud.ibm.com/v3/identify",
+            "params": [
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "Release date of the API version you want to use. Specify dates in YYYY-MM-DD format. The current version is 2018-05-01."
+              }
+            ]
+          },
+          "docs": "Identifies the language of the input text. Returns a list of suggested languages with confidence levels. The service defaults to returning the top five detected languages, but the number of languages may be lower if the text provides little evidence for particular languages."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
