@@ -27,6 +27,14 @@ tags:
   - Natural Language Processing
   - Machine Translation
   - IBM Watson
+  - Artificial Intelligence
+  - Text Analysis
+  - Deprecated
+tags_raw:
+  - Translation
+  - Natural Language Processing
+  - Machine Translation
+  - IBM Watson
   - AI
   - Text Analysis
   - Deprecated
@@ -58,6 +66,8 @@ apis:
   humanURL: https://cloud.ibm.com/apidocs/language-translator
   baseURL: https://api.us-south.language-translator.watson.cloud.ibm.com
   tags:
+  - Language
+  tags_raw:
   - Languages
   properties:
   - type: OpenAPI
