@@ -2,12 +2,10 @@ aid: ibm-translate
 url: https://raw.githubusercontent.com/api-evangelist/ibm-translate/refs/heads/main/apis.yml
 name: IBM Language Translator
 kind: company
-description: >-
-  IBM Watson Language Translator was a REST API service for translating text between 35+
-  languages, detecting input language automatically, and creating custom domain-specific
-  translation models using TMX, XLIFF, or CSV training data. The service supported neural
-  machine translation (NMT) and was available through IBM Cloud. IBM deprecated the service
-  in June 2023 and fully withdrew it in December 2024.
+description: IBM Watson Language Translator was a REST API service for translating text between 35+ languages, detecting
+  input language automatically, and creating custom domain-specific translation models using TMX, XLIFF, or CSV
+  training data. The service supported neural machine translation (NMT) and was available through IBM Cloud. IBM
+  deprecated the service in June 2023 and fully withdrew it in December 2024.
 accessModel:
   pricing: paid
   onboarding: self-serve
@@ -23,23 +21,23 @@ accessModel:
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/ibm-translate.png
 tags:
-  - Translation
-  - Natural Language Processing
-  - Machine Translation
-  - IBM Watson
-  - Artificial Intelligence
-  - Text Analysis
-  - Deprecated
+- Translation
+- Natural Language Processing
+- Machine Translation
+- IBM Watson
+- Artificial Intelligence
+- Text Analysis
+- Deprecated
 tags_raw:
-  - Translation
-  - Natural Language Processing
-  - Machine Translation
-  - IBM Watson
-  - AI
-  - Text Analysis
-  - Deprecated
+- Translation
+- Natural Language Processing
+- Machine Translation
+- IBM Watson
+- AI
+- Text Analysis
+- Deprecated
 created: '2026-06-13'
-modified: '2026-06-13'
+modified: '2026-08-21'
 specificationVersion: '0.23'
 apis:
 - aid: ibm-translate:ibm-translate-documents-api
@@ -117,47 +115,54 @@ apis:
   - type: Pricing
     url: https://www.ibm.com/cloud/watson-language-translator/pricing
 common:
-  - type: IssueTracker
-    url: https://github.com/watson-developer-cloud/python-sdk/issues
-  - type: Releases
-    url: https://github.com/watson-developer-cloud/python-sdk/releases
-  - type: CodeOfConduct
-    url: https://github.com/watson-developer-cloud/python-sdk/blob/master/.github/CODE_OF_CONDUCT.md
-  - type: ContributionGuide
-    url: https://github.com/watson-developer-cloud/python-sdk/blob/master/CONTRIBUTING.md
-  - type: License
-    name: Apache-2.0
-    url: https://github.com/watson-developer-cloud/python-sdk/blob/master/LICENSE
-  - type: AgenticAccess
-    url: agentic-access/ibm-translate-agentic-access.yml
-  - type: VulnerabilityDisclosure
-    url: security/ibm-translate-vulnerability-disclosure.yml
-  - type: DomainSecurity
-    url: security/ibm-translate-domain-security.yml
-  - type: Authentication
-    url: authentication/ibm-translate-authentication.yml
-  - type: Website
-    url: https://www.ibm.com/cloud/watson-language-translator
-  - type: Documentation
-    url: https://cloud.ibm.com/apidocs/language-translator
-  - type: GitHubOrg
-    url: https://github.com/watson-developer-cloud
-  - type: LinkedIn
-    url: https://www.linkedin.com/company/ibm
-  - type: Blog
-    url: https://www.ibm.com/blog/category/watson/
-  - type: Pricing
-    url: https://www.ibm.com/cloud/watson-language-translator/pricing
-  - type: StatusPage
-    url: https://cloud.ibm.com/status?component=language-translator&selected=status
-  - type: X
-    url: https://x.com/IBMcloud
-  - type: Plans
-    url: plans/ibm-translate-plans-pricing.yml
-  - type: RateLimits
-    url: rate-limits/ibm-translate-rate-limits.yml
-  - type: FinOps
-    url: finops/ibm-translate-finops.yml
+- type: ParentCompany
+  url: https://apis.io/providers/ibm/
+  name: Ibm
+  x-relationship: product
+  x-generated-by: ibm-family:2026-08-21
+- type: IssueTracker
+  url: https://github.com/watson-developer-cloud/python-sdk/issues
+- type: Releases
+  url: https://github.com/watson-developer-cloud/python-sdk/releases
+- type: CodeOfConduct
+  url: https://github.com/watson-developer-cloud/python-sdk/blob/master/.github/CODE_OF_CONDUCT.md
+- type: ContributionGuide
+  url: https://github.com/watson-developer-cloud/python-sdk/blob/master/CONTRIBUTING.md
+- type: License
+  name: Apache-2.0
+  url: https://github.com/watson-developer-cloud/python-sdk/blob/master/LICENSE
+- type: AgenticAccess
+  url: agentic-access/ibm-translate-agentic-access.yml
+- type: VulnerabilityDisclosure
+  url: security/ibm-translate-vulnerability-disclosure.yml
+- type: DomainSecurity
+  url: security/ibm-translate-domain-security.yml
+- type: Authentication
+  url: authentication/ibm-translate-authentication.yml
+- type: Website
+  url: https://www.ibm.com/cloud/watson-language-translator
+- type: Documentation
+  url: https://cloud.ibm.com/apidocs/language-translator
+- type: GitHubOrg
+  url: https://github.com/watson-developer-cloud
+- type: LinkedIn
+  url: https://www.linkedin.com/company/ibm
+- type: Blog
+  url: https://www.ibm.com/blog/category/watson/
+- type: Pricing
+  url: https://www.ibm.com/cloud/watson-language-translator/pricing
+- type: StatusPage
+  url: https://cloud.ibm.com/status?component=language-translator&selected=status
+- type: X
+  url: https://x.com/IBMcloud
+- type: Plans
+  url: plans/ibm-translate-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/ibm-translate-rate-limits.yml
+- type: FinOps
+  url: finops/ibm-translate-finops.yml
 maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+- FN: Kin Lane
+  email: kin@apievangelist.com
+x-parent: ibm
+x-relationship: product
