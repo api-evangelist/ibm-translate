@@ -6,6 +6,20 @@ description: IBM Watson Language Translator was a REST API service for translati
   input language automatically, and creating custom domain-specific translation models using TMX, XLIFF, or CSV
   training data. The service supported neural machine translation (NMT) and was available through IBM Cloud. IBM
   deprecated the service in June 2023 and fully withdrew it in December 2024.
+deliveryModel:
+  model: open-core
+  license: Apache-2.0
+  open_source: true
+  commercial: true
+  callable_host: false
+  label: Open core · an OSS project plus a commercial hosted product
+  confidence: high
+  source:
+  - license
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: paid
   onboarding: self-serve
