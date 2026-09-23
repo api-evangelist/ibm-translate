@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: IBM Watson Language Translator V3 Documents Translation API
+  title: IBM Watson Language Translator V3 Translation API
   description: 'REST API for translating text between 35+ languages, identifying the language of input text, listing available translation models, and creating or managing custom translation models. The base URL varies by region. IAM authentication via Bearer tokens is required. The API version parameter 2018-05-01 is required on all requests. NOTE: This service was deprecated in June 2023 and withdrawn in December 2024.'
   version: 3.0.0
   contact:
@@ -96,6 +96,37 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 components:
+  responses:
+    Forbidden:
+      description: Forbidden - insufficient permissions
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Unauthorized:
+      description: Unauthorized - invalid or missing credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    InternalServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    BadRequest:
+      description: Bad request - invalid input parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    NotFound:
+      description: Not found - resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
   schemas:
     IdentifiedLanguage:
       type: object
@@ -112,23 +143,21 @@ components:
           minimum: 0
           maximum: 1
           example: 0.998
-    IdentifiedLanguages:
+    ErrorResponse:
       type: object
-      description: IdentifiedLanguages is the list of identified languages.
+      description: Error response object.
       properties:
-        languages:
-          type: array
-          description: A ranking of identified languages with confidence scores.
-          items:
-            $ref: '#/components/schemas/IdentifiedLanguage'
-    Translation:
-      type: object
-      description: Translation represents the translation result.
-      properties:
-        translation:
+        code:
+          type: integer
+          description: HTTP status code.
+          example: 400
+        error:
           type: string
-          description: Translation output in UTF-8 encoding.
-          example: Hola, mundo!
+          description: Human-readable error description.
+          example: Bad request
+        description:
+          type: string
+          description: Detailed description of the error.
     TranslationResult:
       type: object
       description: TranslationResult is the result returned from a call to the translate a list of strings.
@@ -157,6 +186,23 @@ components:
           description: List of translation output in UTF-8, corresponding to the input text entries.
           items:
             $ref: '#/components/schemas/Translation'
+    IdentifiedLanguages:
+      type: object
+      description: IdentifiedLanguages is the list of identified languages.
+      properties:
+        languages:
+          type: array
+          description: A ranking of identified languages with confidence scores.
+          items:
+            $ref: '#/components/schemas/IdentifiedLanguage'
+    Translation:
+      type: object
+      description: Translation represents the translation result.
+      properties:
+        translation:
+          type: string
+          description: Translation output in UTF-8 encoding.
+          example: Hola, mundo!
     TranslateRequest:
       type: object
       required:
@@ -182,52 +228,6 @@ components:
           type: string
           description: Language code that specifies the target language for translation. Required if model_id is not specified.
           example: es
-    ErrorResponse:
-      type: object
-      description: Error response object.
-      properties:
-        code:
-          type: integer
-          description: HTTP status code.
-          example: 400
-        error:
-          type: string
-          description: Human-readable error description.
-          example: Bad request
-        description:
-          type: string
-          description: Detailed description of the error.
-  responses:
-    NotFound:
-      description: Not found - resource does not exist
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    Forbidden:
-      description: Forbidden - insufficient permissions
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    Unauthorized:
-      description: Unauthorized - invalid or missing credentials
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    InternalServerError:
-      description: Internal server error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    BadRequest:
-      description: Bad request - invalid input parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
   parameters:
     Version:
       name: version

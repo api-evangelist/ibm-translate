@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: IBM Watson Language Translator V3 Documents Languages API
+  title: IBM Watson Language Translator V3 Languages API
   description: 'REST API for translating text between 35+ languages, identifying the language of input text, listing available translation models, and creating or managing custom translation models. The base URL varies by region. IAM authentication via Bearer tokens is required. The API version parameter 2018-05-01 is required on all requests. NOTE: This service was deprecated in June 2023 and withdrawn in December 2024.'
   version: 3.0.0
   contact:
@@ -91,14 +91,14 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-    InternalServerError:
-      description: Internal server error
+    BadRequest:
+      description: Bad request - invalid input parameters
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-    BadRequest:
-      description: Bad request - invalid input parameters
+    InternalServerError:
+      description: Internal server error
       content:
         application/json:
           schema:
@@ -113,30 +113,6 @@ components:
           description: A list of supported languages.
           items:
             $ref: '#/components/schemas/Language'
-    IdentifiableLanguages:
-      type: object
-      description: IdentifiableLanguages is the list of identifiable languages.
-      properties:
-        languages:
-          type: array
-          description: A list of identifiable languages.
-          items:
-            $ref: '#/components/schemas/IdentifiableLanguage'
-    ErrorResponse:
-      type: object
-      description: Error response object.
-      properties:
-        code:
-          type: integer
-          description: HTTP status code.
-          example: 400
-        error:
-          type: string
-          description: Human-readable error description.
-          example: Bad request
-        description:
-          type: string
-          description: Detailed description of the error.
     Language:
       type: object
       description: Response payload for languages.
@@ -180,6 +156,30 @@ components:
           type: boolean
           description: Indicates whether the language supports automatic detection.
           example: true
+    ErrorResponse:
+      type: object
+      description: Error response object.
+      properties:
+        code:
+          type: integer
+          description: HTTP status code.
+          example: 400
+        error:
+          type: string
+          description: Human-readable error description.
+          example: Bad request
+        description:
+          type: string
+          description: Detailed description of the error.
+    IdentifiableLanguages:
+      type: object
+      description: IdentifiableLanguages is the list of identifiable languages.
+      properties:
+        languages:
+          type: array
+          description: A list of identifiable languages.
+          items:
+            $ref: '#/components/schemas/IdentifiableLanguage'
     IdentifiableLanguage:
       type: object
       description: IdentifiableLanguage is the language and its name.

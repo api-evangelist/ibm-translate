@@ -1,10 +1,7 @@
 {
   "provider": "ibm-translate",
   "sources": [
-    "ibm-translate-documents-api-openapi.yml",
-    "ibm-translate-languages-api-openapi.yml",
-    "ibm-translate-models-api-openapi.yml",
-    "ibm-translate-translation-api-openapi.yml"
+    "_original/openapi.yaml"
   ],
   "outputs": [
     "ibm-translate-documents-api-openapi.yml",
@@ -15,6 +12,15 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "openapi.yaml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "ibm-translate-documents-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "ibm-translate-languages-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "ibm-translate-models-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "ibm-translate-translation-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

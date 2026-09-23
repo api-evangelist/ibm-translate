@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: IBM Watson Language Translator V3 Documents Models API
+  title: IBM Watson Language Translator V3 Models API
   description: 'REST API for translating text between 35+ languages, identifying the language of input text, listing available translation models, and creating or managing custom translation models. The base URL varies by region. IAM authentication via Bearer tokens is required. The API version parameter 2018-05-01 is required on all requests. NOTE: This service was deprecated in June 2023 and withdrawn in December 2024.'
   version: 3.0.0
   contact:
@@ -186,7 +186,70 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 components:
+  responses:
+    Forbidden:
+      description: Forbidden - insufficient permissions
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Unauthorized:
+      description: Unauthorized - invalid or missing credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    InternalServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Conflict:
+      description: Conflict - resource already exists or limit reached
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    BadRequest:
+      description: Bad request - invalid input parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    NotFound:
+      description: Not found - resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  parameters:
+    Version:
+      name: version
+      in: query
+      required: true
+      description: Release date of the API version you want to use. Specify dates in YYYY-MM-DD format. The current version is 2018-05-01.
+      schema:
+        type: string
+        example: '2018-05-01'
   schemas:
+    TranslationModels:
+      type: object
+      description: The response type for listing existing translation models.
+      properties:
+        models:
+          type: array
+          description: An array of available models.
+          items:
+            $ref: '#/components/schemas/TranslationModel'
+    DeleteModelResult:
+      type: object
+      description: DeleteModelResult contains the status of the request to delete a model.
+      properties:
+        status:
+          type: string
+          description: OK indicates that the model was successfully deleted.
+          example: OK
     TranslationModel:
       type: object
       description: Response payload for models.
@@ -235,15 +298,6 @@ components:
           - training
           - error
           example: available
-    TranslationModels:
-      type: object
-      description: The response type for listing existing translation models.
-      properties:
-        models:
-          type: array
-          description: An array of available models.
-          items:
-            $ref: '#/components/schemas/TranslationModel'
     ErrorResponse:
       type: object
       description: Error response object.
@@ -259,60 +313,6 @@ components:
         description:
           type: string
           description: Detailed description of the error.
-    DeleteModelResult:
-      type: object
-      description: DeleteModelResult contains the status of the request to delete a model.
-      properties:
-        status:
-          type: string
-          description: OK indicates that the model was successfully deleted.
-          example: OK
-  responses:
-    NotFound:
-      description: Not found - resource does not exist
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    Forbidden:
-      description: Forbidden - insufficient permissions
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    Unauthorized:
-      description: Unauthorized - invalid or missing credentials
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    InternalServerError:
-      description: Internal server error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    Conflict:
-      description: Conflict - resource already exists or limit reached
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    BadRequest:
-      description: Bad request - invalid input parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-  parameters:
-    Version:
-      name: version
-      in: query
-      required: true
-      description: Release date of the API version you want to use. Specify dates in YYYY-MM-DD format. The current version is 2018-05-01.
-      schema:
-        type: string
-        example: '2018-05-01'
   securitySchemes:
     BearerAuth:
       type: http

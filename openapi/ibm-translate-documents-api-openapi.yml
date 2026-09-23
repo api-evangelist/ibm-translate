@@ -1,4 +1,4 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   title: IBM Watson Language Translator V3 Documents API
   description: 'REST API for translating text between 35+ languages, identifying the language of input text, listing available translation models, and creating or managing custom translation models. The base URL varies by region. IAM authentication via Bearer tokens is required. The API version parameter 2018-05-01 is required on all requests. NOTE: This service was deprecated in June 2023 and withdrawn in December 2024.'
@@ -228,20 +228,14 @@ paths:
           $ref: '#/components/responses/InternalServerError'
 components:
   responses:
-    NotFound:
-      description: Not found - resource does not exist
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    PayloadTooLarge:
-      description: Payload too large - file exceeds size limit
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
     Forbidden:
       description: Forbidden - insufficient permissions
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    UnsupportedMediaType:
+      description: Unsupported media type - file format not supported
       content:
         application/json:
           schema:
@@ -258,8 +252,8 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-    UnsupportedMediaType:
-      description: Unsupported media type - file format not supported
+    PayloadTooLarge:
+      description: Payload too large - file exceeds size limit
       content:
         application/json:
           schema:
@@ -270,31 +264,13 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
+    NotFound:
+      description: Not found - resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
   schemas:
-    DocumentList:
-      type: object
-      description: DocumentList contains the list of documents with status.
-      properties:
-        documents:
-          type: array
-          description: An array of all previously submitted documents.
-          items:
-            $ref: '#/components/schemas/DocumentStatus'
-    ErrorResponse:
-      type: object
-      description: Error response object.
-      properties:
-        code:
-          type: integer
-          description: HTTP status code.
-          example: 400
-        error:
-          type: string
-          description: Human-readable error description.
-          example: Bad request
-        description:
-          type: string
-          description: Detailed description of the error.
     DocumentStatus:
       type: object
       description: Information about the submitted document and the translation process.
@@ -355,6 +331,30 @@ components:
           type: integer
           description: The number of characters in the source document, present only if available.
           example: 3142
+    ErrorResponse:
+      type: object
+      description: Error response object.
+      properties:
+        code:
+          type: integer
+          description: HTTP status code.
+          example: 400
+        error:
+          type: string
+          description: Human-readable error description.
+          example: Bad request
+        description:
+          type: string
+          description: Detailed description of the error.
+    DocumentList:
+      type: object
+      description: DocumentList contains the list of documents with status.
+      properties:
+        documents:
+          type: array
+          description: An array of all previously submitted documents.
+          items:
+            $ref: '#/components/schemas/DocumentStatus'
   parameters:
     Version:
       name: version
