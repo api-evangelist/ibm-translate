@@ -79,8 +79,8 @@ paths:
           $ref: '#/components/responses/InternalServerError'
 components:
   responses:
-    Forbidden:
-      description: Forbidden - insufficient permissions
+    BadRequest:
+      description: Bad request - invalid input parameters
       content:
         application/json:
           schema:
@@ -91,8 +91,8 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-    BadRequest:
-      description: Bad request - invalid input parameters
+    Forbidden:
+      description: Forbidden - insufficient permissions
       content:
         application/json:
           schema:
@@ -104,15 +104,42 @@ components:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
   schemas:
-    Languages:
+    IdentifiableLanguage:
       type: object
-      description: The response type for listing supported languages.
+      description: IdentifiableLanguage is the language and its name.
+      properties:
+        language:
+          type: string
+          description: The language code for an identifiable language.
+          example: en
+        name:
+          type: string
+          description: The name of the identifiable language.
+          example: English
+    IdentifiableLanguages:
+      type: object
+      description: IdentifiableLanguages is the list of identifiable languages.
       properties:
         languages:
           type: array
-          description: A list of supported languages.
+          description: A list of identifiable languages.
           items:
-            $ref: '#/components/schemas/Language'
+            $ref: '#/components/schemas/IdentifiableLanguage'
+    ErrorResponse:
+      type: object
+      description: Error response object.
+      properties:
+        code:
+          type: integer
+          description: HTTP status code.
+          example: 400
+        error:
+          type: string
+          description: Human-readable error description.
+          example: Bad request
+        description:
+          type: string
+          description: Detailed description of the error.
     Language:
       type: object
       description: Response payload for languages.
@@ -156,42 +183,15 @@ components:
           type: boolean
           description: Indicates whether the language supports automatic detection.
           example: true
-    ErrorResponse:
+    Languages:
       type: object
-      description: Error response object.
-      properties:
-        code:
-          type: integer
-          description: HTTP status code.
-          example: 400
-        error:
-          type: string
-          description: Human-readable error description.
-          example: Bad request
-        description:
-          type: string
-          description: Detailed description of the error.
-    IdentifiableLanguages:
-      type: object
-      description: IdentifiableLanguages is the list of identifiable languages.
+      description: The response type for listing supported languages.
       properties:
         languages:
           type: array
-          description: A list of identifiable languages.
+          description: A list of supported languages.
           items:
-            $ref: '#/components/schemas/IdentifiableLanguage'
-    IdentifiableLanguage:
-      type: object
-      description: IdentifiableLanguage is the language and its name.
-      properties:
-        language:
-          type: string
-          description: The language code for an identifiable language.
-          example: en
-        name:
-          type: string
-          description: The name of the identifiable language.
-          example: English
+            $ref: '#/components/schemas/Language'
   parameters:
     Version:
       name: version

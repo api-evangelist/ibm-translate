@@ -97,8 +97,8 @@ paths:
           $ref: '#/components/responses/InternalServerError'
 components:
   responses:
-    Forbidden:
-      description: Forbidden - insufficient permissions
+    BadRequest:
+      description: Bad request - invalid input parameters
       content:
         application/json:
           schema:
@@ -109,14 +109,14 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-    InternalServerError:
-      description: Internal server error
+    Forbidden:
+      description: Forbidden - insufficient permissions
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-    BadRequest:
-      description: Bad request - invalid input parameters
+    InternalServerError:
+      description: Internal server error
       content:
         application/json:
           schema:
@@ -128,21 +128,15 @@ components:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
   schemas:
-    IdentifiedLanguage:
+    IdentifiedLanguages:
       type: object
-      description: IdentifiedLanguage is the language and confidence score.
+      description: IdentifiedLanguages is the list of identified languages.
       properties:
-        language:
-          type: string
-          description: The language code for an identified language.
-          example: en
-        confidence:
-          type: number
-          format: double
-          description: The confidence score for the identified language. The score ranges from 0 to 1, with higher scores indicating greater confidence.
-          minimum: 0
-          maximum: 1
-          example: 0.998
+        languages:
+          type: array
+          description: A ranking of identified languages with confidence scores.
+          items:
+            $ref: '#/components/schemas/IdentifiedLanguage'
     ErrorResponse:
       type: object
       description: Error response object.
@@ -158,43 +152,6 @@ components:
         description:
           type: string
           description: Detailed description of the error.
-    TranslationResult:
-      type: object
-      description: TranslationResult is the result returned from a call to the translate a list of strings.
-      properties:
-        word_count:
-          type: integer
-          description: Number of words in the input text.
-          example: 2
-        character_count:
-          type: integer
-          description: Number of characters in the input text.
-          example: 13
-        detected_language:
-          type: string
-          description: The language code of the source text if the source language was automatically detected. If the source language was passed as a parameter, this field is omitted.
-          example: en
-        detected_language_confidence:
-          type: number
-          format: double
-          description: A score between 0 and 1 indicating the confidence of source language detection. A higher value indicates greater confidence. This is returned only when the service detects the source language automatically.
-          minimum: 0
-          maximum: 1
-          example: 0.998
-        translations:
-          type: array
-          description: List of translation output in UTF-8, corresponding to the input text entries.
-          items:
-            $ref: '#/components/schemas/Translation'
-    IdentifiedLanguages:
-      type: object
-      description: IdentifiedLanguages is the list of identified languages.
-      properties:
-        languages:
-          type: array
-          description: A ranking of identified languages with confidence scores.
-          items:
-            $ref: '#/components/schemas/IdentifiedLanguage'
     Translation:
       type: object
       description: Translation represents the translation result.
@@ -228,6 +185,49 @@ components:
           type: string
           description: Language code that specifies the target language for translation. Required if model_id is not specified.
           example: es
+    TranslationResult:
+      type: object
+      description: TranslationResult is the result returned from a call to the translate a list of strings.
+      properties:
+        word_count:
+          type: integer
+          description: Number of words in the input text.
+          example: 2
+        character_count:
+          type: integer
+          description: Number of characters in the input text.
+          example: 13
+        detected_language:
+          type: string
+          description: The language code of the source text if the source language was automatically detected. If the source language was passed as a parameter, this field is omitted.
+          example: en
+        detected_language_confidence:
+          type: number
+          format: double
+          description: A score between 0 and 1 indicating the confidence of source language detection. A higher value indicates greater confidence. This is returned only when the service detects the source language automatically.
+          minimum: 0
+          maximum: 1
+          example: 0.998
+        translations:
+          type: array
+          description: List of translation output in UTF-8, corresponding to the input text entries.
+          items:
+            $ref: '#/components/schemas/Translation'
+    IdentifiedLanguage:
+      type: object
+      description: IdentifiedLanguage is the language and confidence score.
+      properties:
+        language:
+          type: string
+          description: The language code for an identified language.
+          example: en
+        confidence:
+          type: number
+          format: double
+          description: The confidence score for the identified language. The score ranges from 0 to 1, with higher scores indicating greater confidence.
+          minimum: 0
+          maximum: 1
+          example: 0.998
   parameters:
     Version:
       name: version

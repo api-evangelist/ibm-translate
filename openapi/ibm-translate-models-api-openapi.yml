@@ -187,8 +187,8 @@ paths:
           $ref: '#/components/responses/InternalServerError'
 components:
   responses:
-    Forbidden:
-      description: Forbidden - insufficient permissions
+    BadRequest:
+      description: Bad request - invalid input parameters
       content:
         application/json:
           schema:
@@ -199,8 +199,8 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-    InternalServerError:
-      description: Internal server error
+    Forbidden:
+      description: Forbidden - insufficient permissions
       content:
         application/json:
           schema:
@@ -211,8 +211,8 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-    BadRequest:
-      description: Bad request - invalid input parameters
+    InternalServerError:
+      description: Internal server error
       content:
         application/json:
           schema:
@@ -223,33 +223,7 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-  parameters:
-    Version:
-      name: version
-      in: query
-      required: true
-      description: Release date of the API version you want to use. Specify dates in YYYY-MM-DD format. The current version is 2018-05-01.
-      schema:
-        type: string
-        example: '2018-05-01'
   schemas:
-    TranslationModels:
-      type: object
-      description: The response type for listing existing translation models.
-      properties:
-        models:
-          type: array
-          description: An array of available models.
-          items:
-            $ref: '#/components/schemas/TranslationModel'
-    DeleteModelResult:
-      type: object
-      description: DeleteModelResult contains the status of the request to delete a model.
-      properties:
-        status:
-          type: string
-          description: OK indicates that the model was successfully deleted.
-          example: OK
     TranslationModel:
       type: object
       description: Response payload for models.
@@ -298,6 +272,15 @@ components:
           - training
           - error
           example: available
+    TranslationModels:
+      type: object
+      description: The response type for listing existing translation models.
+      properties:
+        models:
+          type: array
+          description: An array of available models.
+          items:
+            $ref: '#/components/schemas/TranslationModel'
     ErrorResponse:
       type: object
       description: Error response object.
@@ -313,6 +296,23 @@ components:
         description:
           type: string
           description: Detailed description of the error.
+    DeleteModelResult:
+      type: object
+      description: DeleteModelResult contains the status of the request to delete a model.
+      properties:
+        status:
+          type: string
+          description: OK indicates that the model was successfully deleted.
+          example: OK
+  parameters:
+    Version:
+      name: version
+      in: query
+      required: true
+      description: Release date of the API version you want to use. Specify dates in YYYY-MM-DD format. The current version is 2018-05-01.
+      schema:
+        type: string
+        example: '2018-05-01'
   securitySchemes:
     BearerAuth:
       type: http
