@@ -78,53 +78,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 components:
-  responses:
-    BadRequest:
-      description: Bad request - invalid input parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    Unauthorized:
-      description: Unauthorized - invalid or missing credentials
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    Forbidden:
-      description: Forbidden - insufficient permissions
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    InternalServerError:
-      description: Internal server error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
   schemas:
-    IdentifiableLanguage:
-      type: object
-      description: IdentifiableLanguage is the language and its name.
-      properties:
-        language:
-          type: string
-          description: The language code for an identifiable language.
-          example: en
-        name:
-          type: string
-          description: The name of the identifiable language.
-          example: English
-    IdentifiableLanguages:
-      type: object
-      description: IdentifiableLanguages is the list of identifiable languages.
-      properties:
-        languages:
-          type: array
-          description: A list of identifiable languages.
-          items:
-            $ref: '#/components/schemas/IdentifiableLanguage'
     ErrorResponse:
       type: object
       description: Error response object.
@@ -183,6 +137,15 @@ components:
           type: boolean
           description: Indicates whether the language supports automatic detection.
           example: true
+    IdentifiableLanguages:
+      type: object
+      description: IdentifiableLanguages is the list of identifiable languages.
+      properties:
+        languages:
+          type: array
+          description: A list of identifiable languages.
+          items:
+            $ref: '#/components/schemas/IdentifiableLanguage'
     Languages:
       type: object
       description: The response type for listing supported languages.
@@ -192,6 +155,18 @@ components:
           description: A list of supported languages.
           items:
             $ref: '#/components/schemas/Language'
+    IdentifiableLanguage:
+      type: object
+      description: IdentifiableLanguage is the language and its name.
+      properties:
+        language:
+          type: string
+          description: The language code for an identifiable language.
+          example: en
+        name:
+          type: string
+          description: The name of the identifiable language.
+          example: English
   parameters:
     Version:
       name: version
@@ -201,6 +176,31 @@ components:
       schema:
         type: string
         example: '2018-05-01'
+  responses:
+    BadRequest:
+      description: Bad request - invalid input parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    InternalServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Forbidden:
+      description: Forbidden - insufficient permissions
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Unauthorized:
+      description: Unauthorized - invalid or missing credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
   securitySchemes:
     BearerAuth:
       type: http
