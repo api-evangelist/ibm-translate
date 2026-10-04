@@ -96,7 +96,63 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 components:
+  responses:
+    Unauthorized:
+      description: Unauthorized - invalid or missing credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    NotFound:
+      description: Not found - resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    BadRequest:
+      description: Bad request - invalid input parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    InternalServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Forbidden:
+      description: Forbidden - insufficient permissions
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
   schemas:
+    TranslateRequest:
+      type: object
+      required:
+      - text
+      description: The request body for translate calls.
+      properties:
+        text:
+          type: array
+          description: Input text in UTF-8 encoding. Submit a maximum of 50 KB of text.
+          items:
+            type: string
+          example:
+          - Hello, world!
+        model_id:
+          type: string
+          description: A globally unique string that identifies the underlying model that is used for translation.
+          example: en-es
+        source:
+          type: string
+          description: Language code that specifies the language of the input text. If omitted, the service derives the source language from the input text. The input must contain sufficient text for the service to identify the language reliably.
+          example: en
+        target:
+          type: string
+          description: Language code that specifies the target language for translation. Required if model_id is not specified.
+          example: es
     IdentifiedLanguages:
       type: object
       description: IdentifiedLanguages is the list of identified languages.
@@ -106,6 +162,29 @@ components:
           description: A ranking of identified languages with confidence scores.
           items:
             $ref: '#/components/schemas/IdentifiedLanguage'
+    IdentifiedLanguage:
+      type: object
+      description: IdentifiedLanguage is the language and confidence score.
+      properties:
+        language:
+          type: string
+          description: The language code for an identified language.
+          example: en
+        confidence:
+          type: number
+          format: double
+          description: The confidence score for the identified language. The score ranges from 0 to 1, with higher scores indicating greater confidence.
+          minimum: 0
+          maximum: 1
+          example: 0.998
+    Translation:
+      type: object
+      description: Translation represents the translation result.
+      properties:
+        translation:
+          type: string
+          description: Translation output in UTF-8 encoding.
+          example: Hola, mundo!
     ErrorResponse:
       type: object
       description: Error response object.
@@ -149,85 +228,6 @@ components:
           description: List of translation output in UTF-8, corresponding to the input text entries.
           items:
             $ref: '#/components/schemas/Translation'
-    Translation:
-      type: object
-      description: Translation represents the translation result.
-      properties:
-        translation:
-          type: string
-          description: Translation output in UTF-8 encoding.
-          example: Hola, mundo!
-    IdentifiedLanguage:
-      type: object
-      description: IdentifiedLanguage is the language and confidence score.
-      properties:
-        language:
-          type: string
-          description: The language code for an identified language.
-          example: en
-        confidence:
-          type: number
-          format: double
-          description: The confidence score for the identified language. The score ranges from 0 to 1, with higher scores indicating greater confidence.
-          minimum: 0
-          maximum: 1
-          example: 0.998
-    TranslateRequest:
-      type: object
-      required:
-      - text
-      description: The request body for translate calls.
-      properties:
-        text:
-          type: array
-          description: Input text in UTF-8 encoding. Submit a maximum of 50 KB of text.
-          items:
-            type: string
-          example:
-          - Hello, world!
-        model_id:
-          type: string
-          description: A globally unique string that identifies the underlying model that is used for translation.
-          example: en-es
-        source:
-          type: string
-          description: Language code that specifies the language of the input text. If omitted, the service derives the source language from the input text. The input must contain sufficient text for the service to identify the language reliably.
-          example: en
-        target:
-          type: string
-          description: Language code that specifies the target language for translation. Required if model_id is not specified.
-          example: es
-  responses:
-    NotFound:
-      description: Not found - resource does not exist
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    BadRequest:
-      description: Bad request - invalid input parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    InternalServerError:
-      description: Internal server error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    Forbidden:
-      description: Forbidden - insufficient permissions
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    Unauthorized:
-      description: Unauthorized - invalid or missing credentials
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
   parameters:
     Version:
       name: version

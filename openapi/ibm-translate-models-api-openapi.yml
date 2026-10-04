@@ -187,6 +187,14 @@ paths:
           $ref: '#/components/responses/InternalServerError'
 components:
   schemas:
+    DeleteModelResult:
+      type: object
+      description: DeleteModelResult contains the status of the request to delete a model.
+      properties:
+        status:
+          type: string
+          description: OK indicates that the model was successfully deleted.
+          example: OK
     ErrorResponse:
       type: object
       description: Error response object.
@@ -211,14 +219,6 @@ components:
           description: An array of available models.
           items:
             $ref: '#/components/schemas/TranslationModel'
-    DeleteModelResult:
-      type: object
-      description: DeleteModelResult contains the status of the request to delete a model.
-      properties:
-        status:
-          type: string
-          description: OK indicates that the model was successfully deleted.
-          example: OK
     TranslationModel:
       type: object
       description: Response payload for models.
@@ -268,14 +268,20 @@ components:
           - error
           example: available
   responses:
-    NotFound:
-      description: Not found - resource does not exist
+    Unauthorized:
+      description: Unauthorized - invalid or missing credentials
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-    Unauthorized:
-      description: Unauthorized - invalid or missing credentials
+    Conflict:
+      description: Conflict - resource already exists or limit reached
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    NotFound:
+      description: Not found - resource does not exist
       content:
         application/json:
           schema:
@@ -294,12 +300,6 @@ components:
             $ref: '#/components/schemas/ErrorResponse'
     Forbidden:
       description: Forbidden - insufficient permissions
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    Conflict:
-      description: Conflict - resource already exists or limit reached
       content:
         application/json:
           schema:

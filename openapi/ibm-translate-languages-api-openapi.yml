@@ -79,21 +79,15 @@ paths:
           $ref: '#/components/responses/InternalServerError'
 components:
   schemas:
-    ErrorResponse:
+    Languages:
       type: object
-      description: Error response object.
+      description: The response type for listing supported languages.
       properties:
-        code:
-          type: integer
-          description: HTTP status code.
-          example: 400
-        error:
-          type: string
-          description: Human-readable error description.
-          example: Bad request
-        description:
-          type: string
-          description: Detailed description of the error.
+        languages:
+          type: array
+          description: A list of supported languages.
+          items:
+            $ref: '#/components/schemas/Language'
     Language:
       type: object
       description: Response payload for languages.
@@ -137,24 +131,6 @@ components:
           type: boolean
           description: Indicates whether the language supports automatic detection.
           example: true
-    IdentifiableLanguages:
-      type: object
-      description: IdentifiableLanguages is the list of identifiable languages.
-      properties:
-        languages:
-          type: array
-          description: A list of identifiable languages.
-          items:
-            $ref: '#/components/schemas/IdentifiableLanguage'
-    Languages:
-      type: object
-      description: The response type for listing supported languages.
-      properties:
-        languages:
-          type: array
-          description: A list of supported languages.
-          items:
-            $ref: '#/components/schemas/Language'
     IdentifiableLanguage:
       type: object
       description: IdentifiableLanguage is the language and its name.
@@ -167,16 +143,37 @@ components:
           type: string
           description: The name of the identifiable language.
           example: English
-  parameters:
-    Version:
-      name: version
-      in: query
-      required: true
-      description: Release date of the API version you want to use. Specify dates in YYYY-MM-DD format. The current version is 2018-05-01.
-      schema:
-        type: string
-        example: '2018-05-01'
+    IdentifiableLanguages:
+      type: object
+      description: IdentifiableLanguages is the list of identifiable languages.
+      properties:
+        languages:
+          type: array
+          description: A list of identifiable languages.
+          items:
+            $ref: '#/components/schemas/IdentifiableLanguage'
+    ErrorResponse:
+      type: object
+      description: Error response object.
+      properties:
+        code:
+          type: integer
+          description: HTTP status code.
+          example: 400
+        error:
+          type: string
+          description: Human-readable error description.
+          example: Bad request
+        description:
+          type: string
+          description: Detailed description of the error.
   responses:
+    Unauthorized:
+      description: Unauthorized - invalid or missing credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
     BadRequest:
       description: Bad request - invalid input parameters
       content:
@@ -195,12 +192,15 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-    Unauthorized:
-      description: Unauthorized - invalid or missing credentials
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
+  parameters:
+    Version:
+      name: version
+      in: query
+      required: true
+      description: Release date of the API version you want to use. Specify dates in YYYY-MM-DD format. The current version is 2018-05-01.
+      schema:
+        type: string
+        example: '2018-05-01'
   securitySchemes:
     BearerAuth:
       type: http
