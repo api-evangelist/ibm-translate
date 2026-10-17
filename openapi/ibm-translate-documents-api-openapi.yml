@@ -228,20 +228,14 @@ paths:
           $ref: '#/components/responses/InternalServerError'
 components:
   responses:
-    Unauthorized:
-      description: Unauthorized - invalid or missing credentials
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
     PayloadTooLarge:
       description: Payload too large - file exceeds size limit
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-    NotFound:
-      description: Not found - resource does not exist
+    Unauthorized:
+      description: Unauthorized - invalid or missing credentials
       content:
         application/json:
           schema:
@@ -258,19 +252,58 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-    InternalServerError:
-      description: Internal server error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
     UnsupportedMediaType:
       description: Unsupported media type - file format not supported
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
+    NotFound:
+      description: Not found - resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    InternalServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  parameters:
+    Version:
+      name: version
+      in: query
+      required: true
+      description: Release date of the API version you want to use. Specify dates in YYYY-MM-DD format. The current version is 2018-05-01.
+      schema:
+        type: string
+        example: '2018-05-01'
   schemas:
+    ErrorResponse:
+      type: object
+      description: Error response object.
+      properties:
+        code:
+          type: integer
+          description: HTTP status code.
+          example: 400
+        error:
+          type: string
+          description: Human-readable error description.
+          example: Bad request
+        description:
+          type: string
+          description: Detailed description of the error.
+    DocumentList:
+      type: object
+      description: DocumentList contains the list of documents with status.
+      properties:
+        documents:
+          type: array
+          description: An array of all previously submitted documents.
+          items:
+            $ref: '#/components/schemas/DocumentStatus'
     DocumentStatus:
       type: object
       description: Information about the submitted document and the translation process.
@@ -331,39 +364,6 @@ components:
           type: integer
           description: The number of characters in the source document, present only if available.
           example: 3142
-    DocumentList:
-      type: object
-      description: DocumentList contains the list of documents with status.
-      properties:
-        documents:
-          type: array
-          description: An array of all previously submitted documents.
-          items:
-            $ref: '#/components/schemas/DocumentStatus'
-    ErrorResponse:
-      type: object
-      description: Error response object.
-      properties:
-        code:
-          type: integer
-          description: HTTP status code.
-          example: 400
-        error:
-          type: string
-          description: Human-readable error description.
-          example: Bad request
-        description:
-          type: string
-          description: Detailed description of the error.
-  parameters:
-    Version:
-      name: version
-      in: query
-      required: true
-      description: Release date of the API version you want to use. Specify dates in YYYY-MM-DD format. The current version is 2018-05-01.
-      schema:
-        type: string
-        example: '2018-05-01'
   securitySchemes:
     BearerAuth:
       type: http
